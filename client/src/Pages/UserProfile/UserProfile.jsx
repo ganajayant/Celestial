@@ -7,10 +7,11 @@ import "./UserProfile.css";
 export default class UserProfile extends Component {
     constructor(props) {
         super(props);
-        this.state = { posts: [], user: {} }
+        this.state = { posts: [], user: {} };
     }
     getData = async () => {
-        await axios.get(`http://localhost:5000/user/${window.location.href.split('/')[4]}`).then(e => {
+        const searchuser = window.location.href.split('/')[4]
+        await axios.get(`http://localhost:5000/user/${searchuser}`).then(e => {
             this.setState({ user: e.data })
         })
         await axios.get(`http://localhost:5000/post/${this.state.user._id}`)
@@ -33,12 +34,7 @@ export default class UserProfile extends Component {
                         </div>
                         <div className="profile-user-settings">
                             <h1 className="profile-user-name">{this.state.user.username}</h1>
-                            <a href="/editprofile">
-                                <button className="btn profile-edit-btn">Edit Profile</button>
-                            </a>
-                            <a href="/editprofile">
-                                <button className="btn profile-settings-btn" aria-label="profile settings"><i className="fas fa-cog" aria-hidden="true"></i></button>
-                            </a>
+                            <button className="btn profile-edit-btn">Follow</button>
                         </div>
                         <div className="profile-stats">
                             <ul>
@@ -62,7 +58,7 @@ export default class UserProfile extends Component {
                                 <div className="gallery-item-info">
                                     <ul>
                                         <li className="gallery-item-likes"><span className="visually-hidden">Likes:</span><i className="fas fa-heart" aria-hidden="true"></i> {item.Likes}</li>
-                                        <li className="gallery-item-comments"><span className="visually-hidden">Comments:</span><i className="fas fa-comment" aria-hidden="true"></i> 5</li>
+                                        <li className="gallery-item-comments"><span className="visually-hidden">Comments:</span><i className="fas fa-comment" aria-hidden="true"></i> 0</li>
                                     </ul>
                                 </div>
                             </div>

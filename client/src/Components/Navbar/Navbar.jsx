@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Component } from 'react';
 
-import logo from "../Images/logo.png";
+import logo from "../../Images/logo.png";
 
 export default class Navbar extends Component {
     constructor(props) {
@@ -19,6 +19,10 @@ export default class Navbar extends Component {
         if (this.state.search !== '') {
             await axios.post(`http://localhost:5000/user/${this.state.search}`)
                 .then(res => {
+                    // const indexOfObject = res.data.payload.findIndex(object => {
+                    //     return object._id === this.props.user._id;
+                    // });
+                    // res.data.payload.splice(indexOfObject, 1)
                     this.setState({ searchData: res.data.payload })
                 })
                 .catch(err => {
@@ -52,6 +56,11 @@ export default class Navbar extends Component {
                                 <div className="col-md-2">
                                     <form className="d-flex input-group w-auto" >
                                         <input type="text" className="form-control" list="search" name='search' placeholder="Search" aria-label="Search" onChange={this.handleChange} />
+                                        {/* <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            {this.state.searchData.map((user) => {
+                                                return <a class="dropdown-item" href={`/profile/${user._id}`}>{user.name}</a>
+                                            })}
+                                        </div> */}
                                         <ul className='list-group'>
                                             {this.state.searchData.map((data) =>
                                                 <button type='button' className='list-group-item list-group-item-action' onClick={(e) => { window.location.href = `/userprofile/${data._id}` }} key={data._id}>
@@ -59,8 +68,14 @@ export default class Navbar extends Component {
                                                 </button>
                                             )}
                                         </ul>
-                                        {/* 
-                                        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === 'Tab') { e.preventDefault(); window.location.href = `/userprofile/${this.state.search}` } }}
+                                        {/* <datalist id='search'>
+                                            {this.state.searchData.map((data) =>
+                                                <option value={data.username} onClick={(e) => { console.log(data._id); window.location.href = `/userprofile/${data._id}` }} key={data._id}>
+                                                    {data.username}
+                                                </option>
+                                            )}
+                                        </datalist> */}
+                                        {/* onKeyDown={(e) => { if (e.key === 'Enter' || e.key === 'Tab') { e.preventDefault(); window.location.href = `/userprofile/${this.state.search}` } }}
                                         < datalist id="search" >
                                             {
                                                 this.state.searchData.map((data) =>

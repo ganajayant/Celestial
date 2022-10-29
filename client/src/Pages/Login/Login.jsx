@@ -2,8 +2,8 @@ import axios from "axios";
 import { Component } from "react";
 import { Navigate } from "react-router-dom";
 
-import videoback from '../Images/back.mp4';
-import logo from "../Images/logo.png"
+import videoback from '../../Images/back.mp4';
+import logo from "../../Images/logo.png"
 import './Login.css';
 
 export default class Login extends Component {
@@ -47,7 +47,7 @@ export default class Login extends Component {
                     <div className="row d-flex align-items-center justify-content-center">
                         <div style={{ 'maxWidth': '420px' }}>
                             <form action="#" className="bg-white border py-4 px-5" onSubmit={this.handleSubmit}>
-                                <img src={logo} alt="" />
+                                <img src={logo} alt="" style={{ width: "12.5em", marginLeft: "3.125em" }} />
                                 <div className="form-floating mb-3">
                                     <input className="form-control" name="email" placeholder="Email Address" value={this.state.value} onChange={this.handleChange} required="" type="email" /><label>Email</label>
                                 </div>

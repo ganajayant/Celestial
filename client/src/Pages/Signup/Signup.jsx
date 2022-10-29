@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { Component } from 'react';
 
-import videoback from '../Images/back.mp4';
+import videoback from '../../Images/back.mp4';
+import logo from "../../Images/logo.png"
 import './Signup.css';
 
 export default class Signup extends Component {
@@ -36,8 +37,9 @@ export default class Signup extends Component {
             <section className="py-4">
                 <div className="container">
                     <div className="row d-flex align-items-center justify-content-center">
-                        <div style={{ 'maxWidth': '420px' }}>
+                        <div style={{ 'maxWidth': '26.25em' }}>
                             <form action="#" className="bg-white border py-4 px-5" onSubmit={this.handleSubmit}>
+                                <img src={logo} alt="" style={{ width: "12.5em", marginLeft: "3.125em" }} />
                                 <div className="form-floating mb-3">
                                     <input className="form-control" name="email" placeholder="Email Address" value={this.state.value} onChange={this.handleChange} required="" type="email" /><label>Email</label>
                                 </div>

@@ -3,12 +3,12 @@ import jwt from "jsonwebtoken";
 import { Component } from "react";
 import { Navigate, Outlet, Route, Routes } from "react-router-dom";
 
-import Login from "./Components/Login/Login";
 import EditProfile from "./Components/ProfileSettings/EditProfile";
-import Signup from "./Components/Signup/Signup";
 import NotFound from "./Pages/404/404";
 import Home from "./Pages/Home";
+import Login from "./Pages/Login/Login";
 import Profile from "./Pages/Profile/Profile";
+import Signup from "./Pages/Signup/Signup";
 import UploadPost from "./Pages/UploadPost";
 import UserProfile from "./Pages/UserProfile/UserProfile";
 
