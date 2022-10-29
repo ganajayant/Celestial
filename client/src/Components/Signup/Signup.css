@@ -1,0 +1,41 @@
+.back-video {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+}
+
+@media (min-aspect-ratio: 16/9) {
+  .back-video {
+    width: 100%;
+    height: auto;
+  }
+}
+
+@media (max-aspect-ratio: 16/9) {
+  .back-video {
+    width: auto;
+    height: 100%;
+  }
+}
+
+.or {
+  position: relative;
+}
+
+.or:before {
+  content: "";
+  height: 1px;
+  background: linear-gradient(to right,
+      silver,
+      silver,
+      rgba(255, 255, 255, 0),
+      rgba(255, 255, 255, 0),
+      silver,
+      silver);
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  z-index: 0;
+}
