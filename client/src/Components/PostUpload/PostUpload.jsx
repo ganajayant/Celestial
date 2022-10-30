@@ -27,7 +27,8 @@ export default class PostUpload extends Component {
             await axios.post('http://localhost:5000/post', data, {
                 headers: { "Content-Type": "multipart/form-data" }
             }).then(response => {
-                console.log(response);
+                alert('Post Uploaded Successfully');
+                window.location.href = '/';
             }).catch(error => console.log(error))
         } catch (error) {
             console.log(error);
@@ -40,14 +41,16 @@ export default class PostUpload extends Component {
                     <div style={{ 'maxWidth': '420px' }}>
                         <form action="#" className="bg-white border py-4 px-5" encType="multipart/form-data" onSubmit={this.handleSubmit}>
                             <h3> Post Upload <i class="fa-solid fa-upload"></i></h3>
-                            <img id="preview" src={this.state.image} alt={''} style={{
-                                'height': '100%', 'width': '100%', 'objectFit': 'contain'
-                            }} />
+                            {
+                                this.state.image !== '' ? <img id="preview" src={this.state.image} alt="" style={{
+                                    'height': '100%', 'width': '100%', 'objectFit': 'contain'
+                                }} /> : ''
+                            }
                             <div className="form-floating mb-3">
-                                < input className="form-control" name="image" accept="image/*" value={this.state.value} required="" onChange={this.readURL} type="file" />
+                                < input className="form-control" name="image" accept="image/*" value={this.state.value} required={true} onChange={this.readURL} type="file" />
                             </div>
                             <div className="form-floating mb-3">
-                                <input className="form-control" name="caption" placeholder="Caption" value={this.state.value} onChange={this.handleChange} required="" type="text" /><label>Caption</label>
+                                <input className="form-control" name="caption" placeholder="Caption" value={this.state.value} onChange={this.handleChange} required={true} type="text" /><label>Caption</label>
                             </div>
                             <div className="mb-2">
                                 <button className="btn btn-dark fw-bold w-100 bg-gradient" type="submit" href="/#">Post Image</button>

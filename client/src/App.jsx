@@ -6,6 +6,7 @@ import { Navigate, Outlet, Route, Routes } from "react-router-dom";
 import EditProfile from "./Components/ProfileSettings/EditProfile";
 import NotFound from "./Pages/404/404";
 import Home from "./Pages/Home";
+import IndividualPost from "./Pages/IndividualPost/IndividualPost";
 import Login from "./Pages/Login/Login";
 import Profile from "./Pages/Profile/Profile";
 import Signup from "./Pages/Signup/Signup";
@@ -67,6 +68,9 @@ export default class App extends Component {
             </Route>
             <Route exact path="/userprofile/:id" element={<PrivateOutlet />}>
                 <Route path="/userprofile/:id" element={<UserProfile user={this.state.userprops} />} />
+            </Route>
+            <Route exact path="/p/:id" element={<PrivateOutlet />}>
+                <Route path="/p/:id" element={<IndividualPost user={this.state.userprops} />} />
             </Route>
             <Route exact path="*" element={<NotFound />} />
         </Routes>

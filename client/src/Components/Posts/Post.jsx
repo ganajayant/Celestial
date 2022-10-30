@@ -1,6 +1,6 @@
 import axios from "axios";
-
 import { Component } from "react";
+
 import PostCard from "../PostCard/PostCard";
 
 export default class Posts extends Component {

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Component } from "react";
+import { Link } from "react-router-dom";
 
 import Navbar from "../../Components/Navbar/Navbar";
 import "./UserProfile.css";
@@ -30,7 +31,7 @@ export default class UserProfile extends Component {
                 <div className="container" >
                     <div className="profile">
                         <div className="profile-image">
-                            <img src={this.state.user.ImageURL} className="rounded-circle" height="100" alt="" loading="lazy" />
+                            <img src={this.state.user.ImageURL} className="rounded-circle" height="100" style={{ height: "200px", width: "200px" }} alt="" loading="lazy" />
                         </div>
                         <div className="profile-user-settings">
                             <h1 className="profile-user-name">{this.state.user.username}</h1>
@@ -52,16 +53,18 @@ export default class UserProfile extends Component {
             <main>
                 <div className="container">
                     <div className="gallery">
-                        {this.state.posts.map(item => {
-                            return <div className="gallery-item" tabIndex="0" key={item._id}>
-                                <img src={item.ImageURL} className="gallery-image" alt="" />
-                                <div className="gallery-item-info">
-                                    <ul>
-                                        <li className="gallery-item-likes"><span className="visually-hidden">Likes:</span><i className="fas fa-heart" aria-hidden="true"></i> {item.Likes}</li>
-                                        <li className="gallery-item-comments"><span className="visually-hidden">Comments:</span><i className="fas fa-comment" aria-hidden="true"></i> 0</li>
-                                    </ul>
+                        {this.state.posts.reverse().map(item => {
+                            return <Link to={`/p/${item._id}`} key={`${item._id}`}>
+                                <div className="gallery-item" tabIndex="0" key={item._id}>
+                                    <img src={item.ImageURL} className="gallery-image" alt="" />
+                                    <div className="gallery-item-info">
+                                        <ul>
+                                            <li className="gallery-item-likes"><span className="visually-hidden">Likes:</span><i className="fas fa-heart" aria-hidden="true"></i> {item.Likes}</li>
+                                            <li className="gallery-item-comments"><span className="visually-hidden">Comments:</span><i className="fas fa-comment" aria-hidden="true"></i> 0</li>
+                                        </ul>
+                                    </div>
                                 </div>
-                            </div>
+                            </Link>
                         })}
                         {/* <div className="gallery-item" tabIndex="0">
                             <img src="https://images.unsplash.com/photo-1497445462247-4330a224fdb1?w=500&h=500&fit=crop" className="gallery-image" alt="" />

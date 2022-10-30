@@ -26,16 +26,14 @@ export const Signup = (req, res, next) => {
             user.password = hashedPass;
             user.save((error, user) => {
                 if (error) {
-                    console.log(error);
-                    res.json({
-                        error
-                    })
+                    console.log(error.message);
+                    res.status(401).send({ message: error.message });
                 }
                 else {
                     res.json({
+                        message: 'User Added Successfully!',
                         user
                     })
-                    // console.log('Success');
                 }
             })
         }
@@ -48,29 +46,30 @@ export const Login = (req, res, next) => {
         if (user) {
             bcrypt.compare(obj.password, user.password, (error, result) => {
                 if (error) {
-                    res.json({
-                        error: error
+                    res.status(404).json({
+                        error: error.message
                     })
                 }
                 if (result) {
                     let token = jwt.sign({ _id: user._id, name: user.username }, process.env.JWT_SECRET, { expiresIn: '1h' })
                     res.cookie('t', token, { expire: new Date() + 9999 })
-                    return res.json({ status: 'ok', user: token })
+                    return res.status(200).json({ user: token })
                 }
                 else {
                     console.log('Password Incorrect');
-                    res.json({
+                    res.status(404).json({
                         message: 'Login Unsuccessful'
                     })
                 }
             })
         }
         else {
-            console.log('No User Found');
             res.json({
                 message: 'No user found!'
             })
         }
+    }).catch(err => {
+        res.status(404).send({ message: err.message });
     })
 }
 

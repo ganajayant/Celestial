@@ -1,7 +1,7 @@
 import { Component } from "react";
 
 import Navbar from "../Components/Navbar/Navbar";
-import PostUpload from "../Components/PostUpload/PostUpload"
+import PostUpload from "../Components/PostUpload/PostUpload";
 
 export default class UploadPost extends Component {
     render() {

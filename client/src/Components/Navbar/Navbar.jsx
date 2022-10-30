@@ -19,14 +19,14 @@ export default class Navbar extends Component {
         if (this.state.search !== '') {
             await axios.post(`http://localhost:5000/user/${this.state.search}`)
                 .then(res => {
-                    // const indexOfObject = res.data.payload.findIndex(object => {
-                    //     return object._id === this.props.user._id;
-                    // });
-                    // res.data.payload.splice(indexOfObject, 1)
+                    const indexOfObject = res.data.payload.findIndex(object => {
+                        return object._id === this.props.user._id;
+                    });
+                    res.data.payload.splice(indexOfObject, 1)
                     this.setState({ searchData: res.data.payload })
                 })
-                .catch(err => {
-                    console.log(err);
+                .catch(error => {
+                    console.log(error);
                 })
         }
     }
@@ -38,12 +38,12 @@ export default class Navbar extends Component {
         return <div >
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
                 <div className="container-fluid">
-                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-mdb-target="#navbarCenteredExample"
-                        aria-controls="navbarCenteredExample" aria-expanded="false" aria-label="Toggle navigation">
+                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" data-mdb-target="#navbarCenteredExample"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <i className="fa-solid fa-bars"></i>
                     </button>
 
-                    <div className="collapse navbar-collapse justify-content-center" id="navbarCenteredExample">
+                    <div className="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
                         <div className="container">
                             <div className="row">
                                 <div className="col-md-1"></div>
@@ -118,7 +118,7 @@ export default class Navbar extends Component {
                                             <a className="nav-link dropdown-toggle d-flex align-items-center" href="/#" id="navbarDropdownMenuLink"
                                                 role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                 <img src={this.props.user.ImageURL} className="rounded-circle" height="22" alt=""
-                                                    loading="lazy" />
+                                                    loading="lazy" style={{ width: "22px" }} />
                                             </a>
                                             <ul className="dropdown-menu" style={{ margin: 0 }} aria-labelledby="navbarDropdownMenuLink">
                                                 <li>

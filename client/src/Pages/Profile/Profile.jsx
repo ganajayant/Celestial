@@ -26,7 +26,7 @@ export default class Profile extends Component {
                 <div className="container" >
                     <div className="profile">
                         <div className="profile-image">
-                            <img src={this.props.user.ImageURL} className="rounded-circle" height="100" alt="" loading="lazy" />
+                            <img src={this.props.user.ImageURL} className="rounded-circle" height="100" style={{ height: "200px", width: "200px" }} alt="" loading="lazy" />
                         </div>
                         <div className="profile-user-settings">
                             <h1 className="profile-user-name">{this.props.user.username}</h1>
@@ -53,7 +53,7 @@ export default class Profile extends Component {
             <main>
                 <div className="container">
                     <div className="gallery row row-cols-1 row-cols-sm-3 row-cols-md-3" >
-                        {this.state.posts.map(item => {
+                        {this.state.posts.reverse().map(item => {
                             return <div className="gallery-item" tabIndex="0" key={item._id}>
                                 <img src={item.ImageURL} className="gallery-image" alt="" />
                                 <div className="gallery-item-info">

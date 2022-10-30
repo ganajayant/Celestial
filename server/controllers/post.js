@@ -1,4 +1,4 @@
-import { cloudinaryconfig } from '../utils/cloudinary.js'
+import { cloudinaryconfig } from '../utils/cloudinary.js';
 
 import POST from '../models/Post.js';
 
@@ -21,7 +21,7 @@ export const PostUpload = async (req, res, next) => {
         post.save((error) => {
             if (error) {
                 console.log(error);
-                res.json({
+                res.status(401).json({
                     error
                 })
             }
