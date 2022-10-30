@@ -7,17 +7,16 @@ import "./Profile.css"
 export default class Profile extends Component {
     constructor(props) {
         super(props);
-        this.state = { posts: [] }
+        this.state = { posts: [] };
     }
     getData = () => {
         axios.get(`http://localhost:5000/post/${this.props.user._id}`)
             .then(e => {
-                // console.log(e);
                 this.setState({ posts: e.data })
             })
-    };
+    }
     componentDidMount() {
-        this.getData()
+        this.getData();
     }
     render() {
         return <div>
