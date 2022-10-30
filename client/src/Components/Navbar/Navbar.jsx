@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { Component } from 'react';
+import Swal from "sweetalert2";
 
 import logo from "../../Images/logo.png";
 
@@ -11,7 +12,7 @@ export default class Navbar extends Component {
     Click = async () => {
         localStorage.removeItem('token');
         await axios.get('http://localhost:5000/login')
-        alert('Logout Successful');
+        Swal.fire('Logout Success', 'See you again', 'success');
         window.location.href = '/login';
     }
     handleChange = async (event) => {
@@ -48,7 +49,7 @@ export default class Navbar extends Component {
                             <div className="row">
                                 <div className="col-md-1"></div>
                                 <div className="col-md-5" style={{ height: "2.5em" }}>
-                                    <a className="navbar-brand" href="/#">
+                                    <a className="navbar-brand" href="/">
                                         <img src={logo}
                                             height="30px" alt="" loading="lazy" />
                                     </a>
@@ -90,7 +91,7 @@ export default class Navbar extends Component {
                                 <div className="col-md-3">
                                     <ul className="navbar-nav justify-content-center">
                                         <li className="nav-item me-3 me-lg-0">
-                                            <a className="nav-link" href="/#">
+                                            <a className="nav-link" href="/">
                                                 <i className="fas fa-home fa-lg text-dark"></i>
                                             </a>
                                         </li>

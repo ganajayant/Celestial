@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { Component } from 'react';
+import Swal from "sweetalert2";
 
 import videoback from '../../Images/back.mp4';
 import logo from "../../Images/logo.png"
@@ -49,11 +50,21 @@ export default class Signup extends Component {
             try {
                 const response = await axios.post('http://localhost:5000/signup', JSON.stringify({ email: this.state.email, fullname: this.state.fullname, username: this.state.username, password: this.state.password }));
                 if (response.status === 200) {
-                    alert('Login Successful');
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'You have successfully signed up!',
+                        icon: 'success',
+                        confirmButtonText: 'Ok'
+                    });
                     window.location.href = '/login';
                 }
             } catch (error) {
-                alert('Email already exists');
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Email already exists',
+                    icon: 'error',
+                    confirmButtonText: 'Ok'
+                });
             }
         }
     }

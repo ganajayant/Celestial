@@ -1,6 +1,7 @@
 import axios from "axios";
 import { Component } from "react";
 import { Navigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 import videoback from '../../Images/back.mp4';
 import logo from "../../Images/logo.png";
@@ -40,11 +41,11 @@ export default class Login extends Component {
                 const response = await axios.post('http://localhost:5000/login', JSON.stringify({ email: this.state.email, password: this.state.password }))
                 if (response.status === 200) {
                     localStorage.setItem('token', response.data.user);
-                    alert('Login Successfull')
+                    Swal.fire('Login Success', 'Welcome to our website', 'success');
                     window.location.href = '/'
                 }
             } catch (error) {
-                alert('Check Your Credentials')
+                Swal.fire('Login Failed', 'Please check your email and password', 'error');
             }
         }
     }

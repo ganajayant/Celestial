@@ -1,5 +1,7 @@
 import axios from "axios";
 import { Component } from "react";
+import Swal from "sweetalert2";
+
 
 import Navbar from "../Navbar/Navbar";
 
@@ -51,8 +53,13 @@ export default class EditProfile extends Component {
             await axios.put('http://localhost:5000/user', data, {
                 headers: { "Content-Type": "multipart/form-data" }
             }).then(response => {
+                Swal.fire({
+                    title: 'Success',
+                    text: 'Profile Updated Successfully',
+                    icon: 'success',
+                    confirmButtonText: 'Ok'
+                });
                 console.log(response);
-                alert('Profile Updated Successfully');
                 window.location.href = '/';
             }).catch(error => console.log(error))
         } catch (error) {

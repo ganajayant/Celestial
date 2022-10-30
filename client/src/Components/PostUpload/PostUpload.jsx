@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Component } from "react";
+import Swal from "sweetalert2";
 
 export default class PostUpload extends Component {
     constructor(props) {
@@ -27,9 +28,15 @@ export default class PostUpload extends Component {
             await axios.post('http://localhost:5000/post', data, {
                 headers: { "Content-Type": "multipart/form-data" }
             }).then(response => {
-                alert('Post Uploaded Successfully');
-                window.location.href = '/';
-            }).catch(error => console.log(error))
+                if (response.status === 200) {
+                    Swal.fire('Post Uploaded', 'Your post has been uploaded', 'success');
+                    window.location.href = '/'
+                }
+            }).catch(error => {
+                Swal.fire('Post Upload Failed', 'Please try again', 'error');
+                console.log(error)
+            }
+            )
         } catch (error) {
             console.log(error);
         }
