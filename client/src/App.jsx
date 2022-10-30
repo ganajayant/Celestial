@@ -12,6 +12,7 @@ import Profile from "./Pages/Profile/Profile";
 import Signup from "./Pages/Signup/Signup";
 import UploadPost from "./Pages/UploadPost";
 import UserProfile from "./Pages/UserProfile/UserProfile";
+import Explore from "./Pages/Explore/Explore";
 
 function PrivateOutlet() {
     if (!localStorage.getItem('token')) {
@@ -71,6 +72,9 @@ export default class App extends Component {
             </Route>
             <Route exact path="/p/:id" element={<PrivateOutlet />}>
                 <Route path="/p/:id" element={<IndividualPost user={this.state.userprops} />} />
+            </Route>
+            <Route exact path="/explore" element={<PrivateOutlet />}>
+                <Route path="/explore" element={<Explore user={this.state.userprops} />} />
             </Route>
             <Route exact path="*" element={<NotFound />} />
         </Routes>

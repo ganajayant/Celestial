@@ -24,6 +24,7 @@ export default class Navbar extends Component {
                         return object._id === this.props.user._id;
                     });
                     res.data.payload.splice(indexOfObject, 1)
+                    console.log(res.data.payload);
                     this.setState({ searchData: res.data.payload })
                 })
                 .catch(error => {
@@ -101,7 +102,7 @@ export default class Navbar extends Component {
                                             </a>
                                         </li>
                                         <li className="nav-item me-3 me-lg-0">
-                                            <a className="nav-link" href="/#">
+                                            <a className="nav-link" href="/explore">
                                                 <i className="far fa-compass fa-lg text-dark"></i>
                                             </a>
                                         </li>
