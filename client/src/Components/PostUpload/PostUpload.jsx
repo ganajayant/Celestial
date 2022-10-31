@@ -128,7 +128,7 @@ export default class PostUpload extends Component {
 										// required={true}
 										type="checkbox"
 									/>
-                                    <label>I agree to the user terms and conditions</label>
+									<label>I agree to the user terms and conditions</label>
 								</div>
 								<div className="mb-2 pt-3">
 									<button

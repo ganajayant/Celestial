@@ -38,10 +38,7 @@ export default class UserProfile extends Component {
                         <div className="profile-user-settings">
                             <h1 className="profile-user-name">{this.state.user.username}</h1>
                             <a href="/editprofile">
-                                <button className="btn profile-edit-btn">Edit Profile</button>
-                            </a>
-                            <a href="/editprofile">
-                                <button className="btn profile-settings-btn" aria-label="profile settings"><i className="fas fa-cog" aria-hidden="true"></i></button>
+                                <button className="btn profile-edit-btn">Follow</button>
                             </a>
                         </div>
                         <div className="profile-stats">
