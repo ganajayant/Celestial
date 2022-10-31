@@ -74,7 +74,7 @@ export default class EditProfile extends Component {
                     <div className="row d-flex align-items-center justify-content-center">
                         <div style={{ 'maxWidth': '420px' }}>
                             <form action="#" className="bg-white border py-4 px-5" encType="multipart/form-data" onSubmit={this.handleSubmit}>
-                                <h3> Edit Profile <i class="fa-solid fa-pen-to-square"></i></h3>
+                                <h3> Edit Profile <i className="fa-solid fa-pen-to-square"></i></h3>
                                 {this.state.formErrors.username && <span style={{ color: "red", fontSize: "13px" }} >{this.state.formErrors.username}</span>}
                                 {
                                     this.state.image !== '' ? <img id="preview" src={this.state.image} alt="" style={{

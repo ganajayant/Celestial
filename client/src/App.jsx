@@ -5,14 +5,15 @@ import { Navigate, Outlet, Route, Routes } from "react-router-dom";
 
 import EditProfile from "./Components/ProfileSettings/EditProfile";
 import NotFound from "./Pages/404/404";
+import Explore from "./Pages/Explore/Explore";
 import Home from "./Pages/Home";
 import IndividualPost from "./Pages/IndividualPost/IndividualPost";
 import Login from "./Pages/Login/Login";
+import PasswordChange from "./Pages/PasswordChange/PasswordChange";
 import Profile from "./Pages/Profile/Profile";
 import Signup from "./Pages/Signup/Signup";
 import UploadPost from "./Pages/UploadPost";
 import UserProfile from "./Pages/UserProfile/UserProfile";
-import Explore from "./Pages/Explore/Explore";
 
 function PrivateOutlet() {
     if (!localStorage.getItem('token')) {
@@ -75,6 +76,9 @@ export default class App extends Component {
             </Route>
             <Route exact path="/explore" element={<PrivateOutlet />}>
                 <Route path="/explore" element={<Explore user={this.state.userprops} />} />
+            </Route>
+            <Route exact path="/passwordchange" element={<PrivateOutlet />}>
+                <Route path="/passwordchange" element={<PasswordChange user={this.state.userprops} />} />
             </Route>
             <Route exact path="*" element={<NotFound />} />
         </Routes>

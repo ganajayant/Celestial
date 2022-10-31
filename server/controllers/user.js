@@ -107,6 +107,7 @@ export const GetUserUsingSearch = async (req, res, next) => {
     try {
         let regex = new RegExp(term, 'i');
         let search = await USER.find({ username: regex }).exec();
+        console.log(search);
         res.send({ payload: search });
     } catch (error) {
         res.json({ error: 'Invalid User' })
@@ -156,4 +157,56 @@ export const UpdateUser = async (req, res, next) => {
     else {
         console.log('error');
     }
+}
+
+export const UpdatePassword = (req, res, next) => {
+    console.log(req.params.id);
+    USER.findById(req.params.id).then(user => {
+        if (user) {
+            bcrypt.compare(req.body.oldpassword, user.password, (error, result) => {
+                if (error) {
+                    res.status(404).json({
+                        error: error.message
+                    })
+                }
+                if (result) {
+                    bcrypt.hash(req.body.newpassword, 10, (err, hashedPass) => {
+                        if (err) {
+                            res.json({
+                                error: err
+                            })
+
+                        }
+                        else {
+                            USER.findByIdAndUpdate(req.params.id, {
+                                password: hashedPass
+                            }, (error, documentuser) => {
+                                if (error) {
+                                    console.log(error.message);
+                                    res.json({ error })
+                                }
+                                else {
+                                    console.log(documentuser);
+                                    res.json({ message: 'Password Updated Successfully' })
+                                }
+                            })
+                        }
+                    })
+                }
+                else {
+                    console.log('Password Incorrect');
+                    res.status(404).json({
+                        message: 'Login Unsuccessful'
+                    })
+                }
+            })
+        }
+        else {
+            res.json({
+                message: 'No user found!'
+            })
+        }
+    }).catch(err => {
+        res.status(404).send({ message: err.message });
+    })
 }

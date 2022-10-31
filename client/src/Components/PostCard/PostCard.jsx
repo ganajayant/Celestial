@@ -27,7 +27,6 @@ export default class PostCard extends Component {
                 <div className="card-body p-0">
                     <div className="embed-responsive embed-responsive-1by1">
                         <img loading="lazy" className="embed-responsive-item" src={this.props.url} alt={''} style={{ height: '100%', width: '100%', objectFit: 'contain' }} />
-
                     </div>
 
                     <div className="d-flex flex-row justify-content-between pl-3 pr-3 pt-3 pb-1">

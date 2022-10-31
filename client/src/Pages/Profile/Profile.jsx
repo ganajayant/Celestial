@@ -12,6 +12,7 @@ export default class Profile extends Component {
     getData = () => {
         axios.get(`http://localhost:5000/post/${this.props.user._id}`)
             .then(e => {
+                // console.log(e.data);
                 this.setState({ posts: e.data })
             })
     }

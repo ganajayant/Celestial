@@ -32,10 +32,6 @@ export default class Navbar extends Component {
                 })
         }
     }
-    clearData = () => {
-        this.setState({ searchData: [] })
-    }
-
     render() {
         return <div >
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -58,11 +54,6 @@ export default class Navbar extends Component {
                                 <div className="col-md-2">
                                     <form className="d-flex input-group w-auto" >
                                         <input type="text" className="form-control" list="search" name='search' placeholder="Search" aria-label="Search" onChange={this.handleChange} />
-                                        {/* <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            {this.state.searchData.map((user) => {
-                                                return <a class="dropdown-item" href={`/profile/${user._id}`}>{user.name}</a>
-                                            })}
-                                        </div> */}
                                         <ul className='list-group'>
                                             {this.state.searchData.map((data) =>
                                                 <button type='button' className='list-group-item list-group-item-action' onClick={(e) => { window.location.href = `/userprofile/${data._id}` }} key={data._id}>
@@ -70,23 +61,6 @@ export default class Navbar extends Component {
                                                 </button>
                                             )}
                                         </ul>
-                                        {/* <datalist id='search'>
-                                            {this.state.searchData.map((data) =>
-                                                <option value={data.username} onClick={(e) => { console.log(data._id); window.location.href = `/userprofile/${data._id}` }} key={data._id}>
-                                                    {data.username}
-                                                </option>
-                                            )}
-                                        </datalist> */}
-                                        {/* onKeyDown={(e) => { if (e.key === 'Enter' || e.key === 'Tab') { e.preventDefault(); window.location.href = `/userprofile/${this.state.search}` } }}
-                                        < datalist id="search" >
-                                            {
-                                                this.state.searchData.map((data) =>
-                                                    <option key={data._id}>
-                                                        {data.username}
-                                                    </option>
-                                                )
-                                            }
-                                        </datalist> */}
                                     </form>
                                 </div>
                                 <div className="col-md-3">
@@ -127,6 +101,7 @@ export default class Navbar extends Component {
                                                     <a className="dropdown-item" href="/profile">My profile</a>
                                                 </li>
                                                 <li><a className="dropdown-item" href="/editprofile">Settings</a></li>
+                                                <li><a className="dropdown-item" href="/passwordchange">Password Change</a></li>
                                                 <li>
                                                     <button className='dropdown-item' onClick={this.Click}>
                                                         Logout

@@ -46,3 +46,9 @@ export const PostId = async (req, res, next) => {
         items => res.json(items)
     )
 }
+
+export const PostIdByPostId = async (req, res, next) => {
+    POST.findById(req.params.id).then(
+        items => res.json(items)
+    )
+}
