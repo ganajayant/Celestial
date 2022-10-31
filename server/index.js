@@ -7,10 +7,10 @@ import multer from "multer";
 
 const storage = multer.diskStorage(
     {
-        destination: function (req, file, cb) {
+	destination: function (req, file, cb) {
             cb(null, 'uploads')
-        },
-        filename: function (req, file, cb) {
+	},
+	filename: function (req, file, cb) {
             cb(null, file.fieldname + '-' + Date.now())
         }
     }
@@ -31,7 +31,7 @@ const PORT = process.env.PORT || 5000;
 const app = express();
 
 mongoose.connect(URL, { useNewUrlParser: true, useUnifiedTopology: true }).then(() => app.listen(PORT, () => {
-    console.log(`Server is running on port: ${PORT}`);
+			console.log(`Server is running on port: ${PORT}`);
 })).catch((error) => console.log(error.message));
 
 app.use(bodyParser.json());
