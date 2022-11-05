@@ -5,12 +5,18 @@ import PostCard from "../PostCard/PostCard";
 
 export default class Posts extends Component {
     state = { posts: [] }
+    componentDidUpdate(prevprops) {
+        if (prevprops.user !== this.props.user) {
+            this.componentDidMount()
+        }
+    }
     async componentDidMount() {
-        try {
-            const json = await axios.get('http://localhost:5000/post')
-            this.setState({ posts: json.data })
-        } catch (error) {
+        if (this.props.user) {
+            const json = await axios.post('http://localhost:5000/post/posts/list', {
+                "list": this.props.user.following
+            })
 
+            this.setState({ posts: json.data })
         }
     }
     getRelativeTime(time) {
@@ -42,8 +48,7 @@ export default class Posts extends Component {
     }
 
     render() {
-        console.log(this.props.user);
-        const postcards = this.state.posts.reverse().map(item => <PostCard key={item._id} url={item.ImageURL} caption={item.Caption} id={item._id} likes={item.Likes} userid={item.Userid} time={this.getRelativeTime(new Date(item.createdAt))} />)
+        const postcards = this.state.posts.reverse().map(item => <PostCard loggineduser={this.props.user} key={item._id} url={item.ImageURL} caption={item.Caption} id={item._id} likes={item.Likes} userid={item.Userid} time={this.getRelativeTime(new Date(item.createdAt))} />)
         return postcards
     }
 }

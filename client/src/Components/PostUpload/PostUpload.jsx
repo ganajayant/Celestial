@@ -68,7 +68,7 @@ export default class PostUpload extends Component {
 								<h3>
 									{" "}
 									Post Upload{" "}
-									<i class="fa-solid fa-upload"></i>
+									<i className="fa-solid fa-upload"></i>
 								</h3>
 								{this.state.image !== "" ? (
 									<img

@@ -18,8 +18,8 @@ const postSchema = mongoose.Schema({
         maxlength: 100,
     },
     Likes: {
-        type: Number,
-        default: 0
+        type: Array,
+        default: []
     }
 }, { timestamps: true })
 

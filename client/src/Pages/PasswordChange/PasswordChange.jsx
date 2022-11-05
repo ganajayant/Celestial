@@ -81,7 +81,7 @@ export default class PasswordChange extends Component {
                     <div className="row d-flex align-items-center justify-content-center">
                         <div style={{ 'maxWidth': '420px' }}>
                             <form action="#" className="bg-white border py-4 px-5" encType="multipart/form-data" onSubmit={this.handleSubmit}>
-                                <h3> Edit Password <i class="fa-solid fa-pen-to-square"></i></h3>
+                                <h3> Edit Password <i className="fa-solid fa-pen-to-square"></i></h3>
                                 {!this.state.passwordValid && <span style={{ color: "red", fontSize: "13px" }} >{this.state.formErrors.password}</span>}
                                 <div className="form-floating mb-3">
                                     <input className="form-control" name="oldpassword" placeholder="Password" value={this.state.value} onChange={this.handleChange} required={true} type="password" /><label>Old Password</label>

@@ -46,3 +46,20 @@ export const PostId = async (req, res, next) => {
 export const PostIdByPostId = async (req, res, next) => {
 	POST.findById(req.params.id).then((items) => res.json(items));
 };
+
+export const PostsByList = async (req, res, next) => {
+	POST.find({ Userid: { $in: req.body.list } }).then((items) => res.json(items));
+}
+
+
+export const PostLike = async (req, res, next) => {
+	if (req.body.liked) {
+		POST.findByIdAndUpdate(req.params.id, {
+			$pull: { Likes: req.body.userid },
+		}).then((items) => res.json(items));
+	} else {
+		POST.findByIdAndUpdate(req.params.id, {
+			$push: { Likes: req.body.userid },
+		}).then((items) => res.json(items));
+	}
+}

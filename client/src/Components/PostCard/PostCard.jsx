@@ -34,15 +34,13 @@ export default class PostCard extends Component {
                     <div className="d-flex flex-row justify-content-between pl-3 pr-3 pt-3 pb-1">
                         <ul className="list-inline d-flex flex-row align-items-center m-0">
                             <li className="list-inline-item">
-                                <button className="btn p-0" style={{}}>
-                                    {/* <ClapButton
-                                    count={this.props.claps}
-                                    countTotal={this.props.claps}
-                                    isClicked={this.props.isClicked}
-                                    onCountChange={this.props.onCountChange}
-                                    namespace="clap"
-                                    style={{ outline: 'none', border: 'none', background: 'none' }}
-                                /> */}
+                                <button className="btn p-0" onClick={(e) => {
+                                    e.preventDefault();
+                                    axios.put(`http://localhost:5000/post/like/${this.props.id}`, {
+                                        "userid": this.props.loggineduser._id,
+                                        "liked": this.props.likes.includes(this.props.loggineduser._id)
+                                    })
+                                }} >
                                     <svg width="1.6em" height="1.6em" viewBox="0 0 16 16"
                                         className="bi bi-heart" fill="currentColor"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -90,7 +88,7 @@ export default class PostCard extends Component {
                     </div>
 
                     <div className="pl-3 pr-3 pb-2">
-                        <strong className="d-block">{this.props.likes} likes</strong>
+                        <strong className="d-block">{this.props.likes?.length} likes</strong>
                         <strong className="d-block">{this.state.username}</strong>
                         <p className="d-block mb-1">{this.props.caption}</p>
                         <button className="btn p-0">

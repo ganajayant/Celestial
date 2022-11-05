@@ -4,19 +4,19 @@ import "./404.css";
 
 export default class NotFound extends Component {
     render() {
-        return <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="error-template">
+        return <div className="container">
+            <div className="row">
+                <div className="col-md-12">
+                    <div className="error-template">
                         <h1>
                             Oops!</h1>
                         <h2>
                             404 Not Found</h2>
-                        <div class="error-details">
+                        <div className="error-details">
                             Sorry, an error has occured, Requested page not found!
                         </div>
-                        <div class="error-actions">
-                            <a href="/" class="btn btn-dark fw-bold w-100 bg-gradient"><span class="glyphicon glyphicon-home"></span>
+                        <div className="error-actions">
+                            <a href="/" className="btn btn-dark fw-bold w-100 bg-gradient"><span className="glyphicon glyphicon-home"></span>
                                 Take Me Home </a>
                         </div>
                     </div>

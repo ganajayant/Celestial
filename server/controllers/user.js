@@ -41,7 +41,6 @@ export const Signup = (req, res, next) => {
 
 export const Login = (req, res, next) => {
     let obj = JSON.parse(Object.keys(req.body));
-    console.log('obj', obj);
     USER.findOne({ $or: [{ email: obj.email }] }).then(user => {
         if (user) {
             bcrypt.compare(obj.password, user.password, (error, result) => {
@@ -83,7 +82,7 @@ export const GetUser = (req, res, next) => {
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET)
         let user = USER.findById(decoded._id).then(userFound => {
-            return res.status(200).json({ _id: userFound._id, name: userFound.name, username: userFound.username, email: userFound.email, createdAt: userFound.createdAt, ImageURL: userFound.ImageURL, bio: userFound.bio })
+            return res.status(200).json({ _id: userFound._id, name: userFound.name, username: userFound.username, email: userFound.email, createdAt: userFound.createdAt, ImageURL: userFound.ImageURL, bio: userFound.bio, followers: userFound.followers, following: userFound.following })
         })
     } catch (error) {
         res.json({ error: 'invalid token' })

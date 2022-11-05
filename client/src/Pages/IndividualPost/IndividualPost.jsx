@@ -45,7 +45,7 @@ export default class IndividualPost extends Component {
                             <div className="card-footer">
                                 <a href="/#" className="card-link"><i className="fa-regular fa-heart"></i> Like</a>
                                 <a href="/#" className="card-link"><i className="fa-regular fa-comment"></i> Comment</a>
-                                <a href="/#" className="card-link"><i class="fa-solid fa-share"></i> Share</a>
+                                <a href="/#" className="card-link"><i className="fa-solid fa-share"></i> Share</a>
                             </div>
                         </div>
                     </div>
