@@ -15,7 +15,7 @@ export default class Home extends Component {
                         <div className="row">
                             <div className="col-8">
                                 <div className="d-flex flex-column mt-4 mb-4">
-                                    <Posts />
+                                    <Posts user={this.props.user} />
                                 </div>
                             </div>
                             <div className="col-4">

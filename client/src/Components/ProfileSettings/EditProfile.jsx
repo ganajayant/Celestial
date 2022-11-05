@@ -61,7 +61,15 @@ export default class EditProfile extends Component {
                 });
                 console.log(response);
                 window.location.href = '/';
-            }).catch(error => console.log(error))
+            }).catch(error => {
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Username already exists',
+                    icon: 'error',
+                    confirmButtonText: 'Ok'
+                });
+                console.log(error);
+            })
         } catch (error) {
             console.log(error);
         }
@@ -82,7 +90,7 @@ export default class EditProfile extends Component {
                                     }} /> : ''
                                 }
                                 <div className="form-floating mb-3">
-                                    < input className="form-control" placeholder="Profile Picture" name="image" accept="image/*" value={this.state.value} required={true} onChange={this.readURL} type="file" />
+                                    < input className="form-control" placeholder="Profile Picture" name="image" accept="image/*" value={this.state.value} onChange={this.readURL} type="file" />
                                 </div>
                                 <div className="form-floating mb-3">
                                     <input className="form-control" name="name" placeholder="Name" value={this.state.name} onChange={this.handleChange} required={true} type="text" /><label>Name</label>

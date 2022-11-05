@@ -11,7 +11,7 @@ export default class Navbar extends Component {
     }
     Click = async () => {
         localStorage.removeItem('token');
-        await axios.get('http://localhost:5000/login')
+        await axios.get('http://localhost:5000/user/auth/logout')
         Swal.fire('Logout Success', 'See you again', 'success');
         window.location.href = '/login';
     }
@@ -24,7 +24,6 @@ export default class Navbar extends Component {
                         return object._id === this.props.user._id;
                     });
                     res.data.payload.splice(indexOfObject, 1)
-                    console.log(res.data.payload);
                     this.setState({ searchData: res.data.payload })
                 })
                 .catch(error => {
@@ -48,7 +47,7 @@ export default class Navbar extends Component {
                                 <div className="col-md-5" style={{ height: "2.5em" }}>
                                     <a className="navbar-brand" href="/">
                                         <img src={logo}
-                                            height="30px" alt="" loading="lazy" />
+                                            height="30px" alt="" />
                                     </a>
                                 </div>
                                 <div className="col-md-2">
@@ -94,7 +93,7 @@ export default class Navbar extends Component {
                                             <a className="nav-link dropdown-toggle d-flex align-items-center" href="/#" id="navbarDropdownMenuLink"
                                                 role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                 <img src={this.props.user.ImageURL} className="rounded-circle" height="22" alt=""
-                                                    loading="lazy" style={{ width: "22px" }} />
+                                                    style={{ width: "22px" }} />
                                             </a>
                                             <ul className="dropdown-menu" style={{ margin: 0 }} aria-labelledby="navbarDropdownMenuLink">
                                                 <li>

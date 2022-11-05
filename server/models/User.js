@@ -32,13 +32,21 @@ const userSchema = mongoose.Schema({
         type: String,
         trim: true,
         required: true,
-        default: 'Bio',
+        default: '404 bio not found',
         maxlength: 200
     },
     posts: {
         type: Array,
         default: []
-    }
+    },
+    followers: {
+        type: Array,
+        default: []
+    },
+    following: {
+        type: Array,
+        default: []
+    },
 }, { timestamps: true })
 
 const USER = mongoose.model('User', userSchema);

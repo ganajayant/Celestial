@@ -63,7 +63,7 @@ export default class PasswordChange extends Component {
                 if (response.status === 200) {
                     Swal.fire('Password Changed', 'Your password has been changed', 'success');
                     localStorage.removeItem('token');
-                    await axios.get('http://localhost:5000/login')
+                    await axios.get('http://localhost:5000/user/auth/logout')
                     Swal.fire('Logout Success', 'See you again', 'success');
                     window.location.href = '/login';
                 }

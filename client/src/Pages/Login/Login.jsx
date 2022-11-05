@@ -8,7 +8,6 @@ import logo from "../../Images/logo.png";
 import './Login.css';
 
 export default class Login extends Component {
-    // form validation
     constructor(props) {
         super(props);
         this.state = {
@@ -38,7 +37,7 @@ export default class Login extends Component {
         event.preventDefault();
         if (this.state.passwordValid) {
             try {
-                const response = await axios.post('http://localhost:5000/login', JSON.stringify({ email: this.state.email, password: this.state.password }))
+                const response = await axios.post('http://localhost:5000/user/auth/login', JSON.stringify({ email: this.state.email, password: this.state.password }))
                 if (response.status === 200) {
                     localStorage.setItem('token', response.data.user);
                     Swal.fire('Login Success', 'Welcome to our website', 'success');

@@ -19,10 +19,8 @@ const upload = multer({ storage: storage });
 
 dotenv.config()
 
-import LoginRoutes from './routes/login.js';
 import NewsRoutes from './routes/news.js';
 import PostRoutes from './routes/post.js';
-import SignRoutes from './routes/signup.js';
 import UserRoutes from './routes/user.js';
 
 const URL = process.env.URL
@@ -38,8 +36,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors())
 
-app.use('/signup', SignRoutes)
-app.use('/login', LoginRoutes)
 app.use('/post', upload.single('file'), PostRoutes)
 app.use('/news', NewsRoutes)
 app.use('/user', upload.single('file'), UserRoutes)

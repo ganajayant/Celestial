@@ -21,7 +21,9 @@ export default class PostCard extends Component {
                             <img src={this.state.profile} alt="..."
                                 style={{ 'transform': 'scale(1.5)', 'width': '100%', 'position': 'absolute', 'left': '0' }} />
                         </div>
-                        <span className="font-weight-bold">{this.state.username}</span>
+                        <a href={`http://localhost:3000/userprofile/${this.props.userid}`}>
+                            <span className="font-weight-bold">{this.state.username}</span>
+                        </a>
                     </div>
                 </div>
                 <div className="card-body p-0">
@@ -60,7 +62,7 @@ export default class PostCard extends Component {
                                 </button>
                             </li>
                             <li className="list-inline-item ml-2">
-                                <button className="btn p-0">
+                                <button className="btn p-0" onClick={() => { navigator.clipboard.writeText(`http://localhost:3000/p/${this.props.id}`) }}>
                                     <svg width="1.6em" height="1.6em" viewBox="0 0 16 16"
                                         className="bi bi-share" fill="currentColor"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -73,7 +75,7 @@ export default class PostCard extends Component {
                             </li>
                         </ul>
                         <div>
-                            <button className="btn p-0">
+                            <button className="btn p-0" >
                                 <svg width="1.6em" height="1.6em" viewBox="0 0 16 16" className="bi bi-hdd"
                                     fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path fillRule="evenodd"

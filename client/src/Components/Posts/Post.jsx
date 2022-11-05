@@ -42,7 +42,8 @@ export default class Posts extends Component {
     }
 
     render() {
-        const postcards = this.state.posts.reverse().map(item => <PostCard key={item._id} url={item.ImageURL} caption={item.Caption} likes={item.Likes} userid={item.Userid} time={this.getRelativeTime(new Date(item.createdAt))} />)
+        console.log(this.props.user);
+        const postcards = this.state.posts.reverse().map(item => <PostCard key={item._id} url={item.ImageURL} caption={item.Caption} id={item._id} likes={item.Likes} userid={item.Userid} time={this.getRelativeTime(new Date(item.createdAt))} />)
         return postcards
     }
 }

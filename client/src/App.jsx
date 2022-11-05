@@ -46,7 +46,6 @@ export default class App extends Component {
                         }
                     })
                     const { data } = await response;
-                    console.log('user', data);
                     this.setState({ userprops: data })
                 }
             }

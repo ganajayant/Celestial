@@ -5,7 +5,6 @@ import USER from "../models/User.js";
 import { cloudinaryconfig } from '../utils/cloudinary.js';
 
 export const Signup = (req, res, next) => {
-    console.log(req.body);
     let obj = JSON.parse(Object.keys(req.body));
     bcrypt.hash(obj.password, 10, (err, hashedPass) => {
         if (err) {
@@ -42,6 +41,7 @@ export const Signup = (req, res, next) => {
 
 export const Login = (req, res, next) => {
     let obj = JSON.parse(Object.keys(req.body));
+    console.log('obj', obj);
     USER.findOne({ $or: [{ email: obj.email }] }).then(user => {
         if (user) {
             bcrypt.compare(obj.password, user.password, (error, result) => {
@@ -64,7 +64,7 @@ export const Login = (req, res, next) => {
             })
         }
         else {
-            res.json({
+            res.status(404).json({
                 message: 'No user found!'
             })
         }
@@ -94,7 +94,7 @@ export const GetUserUsingID = (req, res, next) => {
     const id = req.params.id;
     try {
         let user = USER.findById(id).then(userFound => {
-            return res.status(200).json({ _id: userFound._id, name: userFound.name, username: userFound.username, email: userFound.email, createdAt: userFound.createdAt, ImageURL: userFound.ImageURL, bio: userFound.bio })
+            return res.status(200).json({ _id: userFound._id, name: userFound.name, username: userFound.username, email: userFound.email, createdAt: userFound.createdAt, ImageURL: userFound.ImageURL, bio: userFound.bio, followers: userFound.followers, following: userFound.following })
         })
     } catch (error) {
         res.json({ error: 'Invalid User' })
@@ -113,6 +113,7 @@ export const GetUserUsingSearch = async (req, res, next) => {
         res.json({ error: 'Invalid User' })
     }
 }
+
 
 export const UpdateUser = async (req, res, next) => {
     res.sendStatus(200);
@@ -159,8 +160,59 @@ export const UpdateUser = async (req, res, next) => {
     }
 }
 
+export const UpdateFollow = (req, res, next) => {
+    if (req.body.follows) {
+        USER.findByIdAndUpdate(req.params.id, {
+            $pull: { followers: req.body.followedBy }
+        }, (error) => {
+            if (error) {
+                console.log(error.message);
+                res.json({ error })
+            }
+            else {
+                console.log('Unfollowed');
+            }
+        })
+        USER.findByIdAndUpdate(req.body.followedBy, {
+            $pull: { following: req.params.id }
+        }, (error) => {
+            if (error) {
+                console.log(error.message);
+                res.json({ error })
+            }
+            else {
+                console.log('Unfollowed');
+            }
+        })
+    }
+    else {
+        USER.findByIdAndUpdate(req.params.id, {
+            $push: { followers: req.body.followedBy }
+        }, (error) => {
+            if (error) {
+                console.log(error.message);
+                res.json({ error })
+            }
+            else {
+                console.log('Followed');
+            }
+        })
+        USER.findByIdAndUpdate(req.body.followedBy, {
+            $push: { following: req.params.id }
+        }, (error) => {
+            if (error) {
+                console.log(error.message);
+                res.json({ error })
+            }
+            else {
+                console.log('Followed');
+            }
+        })
+
+    }
+}
 export const UpdatePassword = (req, res, next) => {
-    console.log(req.params.id);
+    console.log('password', req.params.id);
     USER.findById(req.params.id).then(user => {
         if (user) {
             bcrypt.compare(req.body.oldpassword, user.password, (error, result) => {

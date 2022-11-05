@@ -26,7 +26,7 @@ export default class Profile extends Component {
                 <div className="container" >
                     <div className="profile">
                         <div className="profile-image">
-                            <img src={this.props.user.ImageURL} className="rounded-circle" height="100" style={{ height: "200px", width: "200px" }} alt="" loading="lazy" />
+                            <img src={this.props.user.ImageURL} className="rounded-circle" height="100" style={{ height: "200px", width: "200px" }} alt="" />
                         </div>
                         <div className="profile-user-settings">
                             <h1 className="profile-user-name">{this.props.user.username}</h1>

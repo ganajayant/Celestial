@@ -10,21 +10,17 @@ export default class UserProfile extends Component {
         super(props);
         this.state = { posts: [], user: '' }
     }
-    getData = async () => {
+    async componentDidMount() {
         await axios.get(`http://localhost:5000/user/${window.location.pathname.split('/')[2]}`).then(e => {
             this.setState({ user: e.data })
         })
         if (this.state.user !== '') {
-            console.log(this.state.user);
             await axios.get(`http://localhost:5000/post/${this.state.user._id}`)
                 .then(e => {
                     console.log(e);
                     this.setState({ posts: e.data })
                 })
         }
-    };
-    componentDidMount() {
-        this.getData()
     }
     render() {
         return <div>
@@ -33,19 +29,25 @@ export default class UserProfile extends Component {
                 <div className="container" >
                     <div className="profile">
                         <div className="profile-image">
-                            <img src={this.state.user.ImageURL} className="rounded-circle" height="100" alt="" loading="lazy" />
+                            <img src={this.state.user.ImageURL} className="rounded-circle" height="100" style={{ height: "200px", width: "200px" }} alt="" />
                         </div>
                         <div className="profile-user-settings">
                             <h1 className="profile-user-name">{this.state.user.username}</h1>
                             <a href="/editprofile">
-                                <button className="btn profile-edit-btn">Follow</button>
+                                <button className="btn profile-edit-btn" onClick={async (e) => {
+                                    e.preventDefault();
+                                    axios.put(`http://localhost:5000/user/updatefollow/${this.state.user._id}`, {
+                                        followedBy: this.props.user._id,
+                                        follows: this.state.user?.followers?.includes(this.props.user._id)
+                                    })
+                                }}> {this.state.user?.followers?.includes(this.props.user._id) && <>following</>}{!this.state.user?.followers?.includes(this.props.user._id) && <>follow</>}</button>
                             </a>
                         </div>
                         <div className="profile-stats">
                             <ul>
                                 <li><span className="profile-stat-count">{this.state.posts?.length}</span> posts</li>
-                                <li><span className="profile-stat-count">188</span> followers</li>
-                                <li><span className="profile-stat-count">206</span> following</li>
+                                <li><span className="profile-stat-count">followers</span> {this.state.user?.followers?.length}</li>
+                                <li><span className="profile-stat-count">following</span> {this.state.user?.following?.length}</li>
                             </ul>
                         </div>
                         <div className="profile-bio">
@@ -53,7 +55,7 @@ export default class UserProfile extends Component {
                         </div>
                     </div>
                 </div>
-            </header>
+            </header >
             <main>
                 <div className="container">
                     <div className="gallery">
