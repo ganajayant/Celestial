@@ -20,6 +20,10 @@ const postSchema = mongoose.Schema({
     Likes: {
         type: Array,
         default: []
+    },
+    Comments: {
+        type: Array,
+        default: []
     }
 }, { timestamps: true })
 

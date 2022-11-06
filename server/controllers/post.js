@@ -63,3 +63,12 @@ export const PostLike = async (req, res, next) => {
 		}).then((items) => res.json(items));
 	}
 }
+
+export const PostComment = async (req, res, next) => {
+	POST.findByIdAndUpdate(req.params.id, {
+		$push: { Comments: { comment: req.body.comment, user: req.body.commenteduser } },
+	}).then((items) => {
+		console.log(items);
+		res.json(items)
+	});
+}

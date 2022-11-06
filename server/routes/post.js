@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { PostData, PostId, PostIdByPostId, PostLike, PostsByList, PostUpload } from "../controllers/post.js";
+import { PostComment, PostData, PostId, PostIdByPostId, PostLike, PostsByList, PostUpload } from "../controllers/post.js";
 
 const router = Router()
 
@@ -10,4 +10,5 @@ router.get('/', PostData)
 router.get('/:id', PostId)
 router.post('/posts/list', PostsByList)
 router.put('/like/:id', PostLike)
+router.put('/comment/:id', PostComment)
 export default router;

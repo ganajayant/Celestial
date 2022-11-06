@@ -14,7 +14,6 @@ router.put('/', UpdateUser)
 router.put('/:id', UpdatePassword)
 router.put('/updatefollow/:id', UpdateFollow)
 
-
 // User Authentication
 router.post('/auth/signup', Signup)
 router.post('/auth/login/', Login)
