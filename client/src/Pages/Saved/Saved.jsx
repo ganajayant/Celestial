@@ -26,23 +26,19 @@ export default class IndividualPost extends Component {
         return <div>
             <Navbar user={this.props.user} />
             <div className='container-fluid' >
-                <div className='row'>
-                    {
-                        this.state.data.map((item, index) => {
-                            return (
-                                <div className='col-2' key={index}>
-                                    <div className="card" style={{ width: "18rem" }}>
-                                        <img src={item.ImageURL} className="card-img-top" alt="..." />
-                                        <div className="card-body">
-                                            <h5 className="card-title">{item.title}</h5>
-                                            <p className="card-text">{item.description}</p>
-                                            <a href={`/post/${item._id}`} className="btn btn-primary">Go somewhere</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            )
-                        })
-                    }
+                <div className="row" style={{ paddingTop: "2em", marginLeft: "20px", marginRight: "0px" }}>
+                    {this.state.data.map(item => {
+                        return <div className="col-lg-4 col-md-12 mb-4 mb-lg-0" key={item.ImageURL} onClick={(e) => {
+                            e.preventDefault()
+                            window.location.href = `/p/${item._id}`
+                        }}  >
+                            <img
+                                src={item.ImageURL}
+                                alt={""}
+                                className="w-100 shadow-1-strong rounded mb-4"
+                            />
+                        </div >
+                    })}
                 </div>
             </div>
         </div>

@@ -44,8 +44,12 @@ export default class Profile extends Component {
                         <div className="profile-stats">
                             <ul>
                                 <li><span className="profile-stat-count">{this.state.posts.length}</span> posts</li>
-                                <li><span className="profile-stat-count">{this.props.user?.followers?.length}</span> followers</li>
-                                <li><span className="profile-stat-count">{this.props.user?.following?.length}</span> following</li>
+                                <li onClick={(e) => {
+                                    window.location.href = `/followers`
+                                }}><span className="profile-stat-count">{this.props.user?.followers?.length}</span> followers</li>
+                                <li onClick={(e) => {
+                                    window.location.href = `/following`
+                                }}><span className="profile-stat-count">{this.props.user?.following?.length}</span> following</li>
                             </ul>
                         </div>
                         <div className="profile-bio">
@@ -58,7 +62,10 @@ export default class Profile extends Component {
                 <div className="container">
                     <div className="gallery row row-cols-1 row-cols-sm-3 row-cols-md-3" >
                         {this.state.posts.reverse().map(item => {
-                            return <div className="gallery-item" tabIndex="0" key={item._id}>
+                            return <div className="gallery-item" tabIndex="0" key={item._id} onClick={(e) => {
+                                e.preventDefault()
+                                window.location.href = `/p/${item._id}`
+                            }}>
                                 <img src={item.ImageURL} className="gallery-image" alt="" />
                                 <div className="gallery-item-info">
                                     <ul>
