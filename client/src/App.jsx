@@ -11,6 +11,7 @@ import IndividualPost from "./Pages/IndividualPost/IndividualPost";
 import Login from "./Pages/Login/Login";
 import PasswordChange from "./Pages/PasswordChange/PasswordChange";
 import Profile from "./Pages/Profile/Profile";
+import Saved from "./Pages/Saved/Saved";
 import Signup from "./Pages/Signup/Signup";
 import UploadPost from "./Pages/UploadPost";
 import UserProfile from "./Pages/UserProfile/UserProfile";
@@ -78,6 +79,9 @@ export default class App extends Component {
             </Route>
             <Route exact path="/passwordchange" element={<PrivateOutlet />}>
                 <Route path="/passwordchange" element={<PasswordChange user={this.state.userprops} />} />
+            </Route>
+            <Route exact path="/saved" element={<PrivateOutlet />}>
+                <Route path="/saved" element={<Saved user={this.state.userprops} />} />
             </Route>
             <Route exact path="*" element={<NotFound />} />
         </Routes>

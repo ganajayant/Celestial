@@ -65,8 +65,8 @@ export default class UserProfile extends Component {
                                     <img src={item.ImageURL} className="gallery-image" alt="" />
                                     <div className="gallery-item-info">
                                         <ul>
-                                            <li className="gallery-item-likes"><span className="visually-hidden">Likes:</span><i className="fas fa-heart" aria-hidden="true"></i> {item.Likes}</li>
-                                            <li className="gallery-item-comments"><span className="visually-hidden">Comments:</span><i className="fas fa-comment" aria-hidden="true"></i> 5</li>
+                                            <li className="gallery-item-likes"><span className="visually-hidden">Likes:</span><i className="fas fa-heart" aria-hidden="true"></i> {item.Likes?.length}</li>
+                                            <li className="gallery-item-comments"><span className="visually-hidden">Comments:</span><i className="fas fa-comment" aria-hidden="true"></i> {item.Comments?.length}</li>
                                         </ul>
                                     </div>
                                 </div>

@@ -36,7 +36,7 @@ export default class IndividualPost extends Component {
                             </div>
                             <div className="card-body">
                                 <div className="image-holder">
-                                    <img loading="lazy" className="embed-responsive-item" src={this.state.post.ImageURL} alt={''} style={{ height: '100%', width: '100%', objectFit: 'contain' }} />
+                                    <img className="embed-responsive-item" src={this.state.post.ImageURL} alt={''} style={{ height: '100%', width: '100%', objectFit: 'contain' }} />
                                 </div>
                                 <p className="card-text">
                                     {this.props.caption}

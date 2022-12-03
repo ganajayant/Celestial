@@ -96,9 +96,8 @@ export default class Navbar extends Component {
                                                     style={{ width: "22px" }} />
                                             </a>
                                             <ul className="dropdown-menu" style={{ margin: 0 }} aria-labelledby="navbarDropdownMenuLink">
-                                                <li>
-                                                    <a className="dropdown-item" href="/profile">My profile</a>
-                                                </li>
+                                                <li><a className="dropdown-item" href="/profile">My profile</a></li>
+                                                <li><a className="dropdown-item" href="/saved">Saved Posts</a></li>
                                                 <li><a className="dropdown-item" href="/editprofile">Settings</a></li>
                                                 <li><a className="dropdown-item" href="/passwordchange">Password Change</a></li>
                                                 <li>

@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { GetUser, GetUserUsingID, GetUserUsingSearch, Login, Logout, Signup, UpdateFollow, UpdatePassword, UpdateUser } from "../controllers/user.js";
+import { GetUser, GetUserUsingID, GetUserUsingSearch, Login, Logout, Signup, UpdateBookmark, UpdateFollow, UpdatePassword, UpdateUser } from "../controllers/user.js";
 
 const router = Router()
 
@@ -13,6 +13,7 @@ router.post('/:search', GetUserUsingSearch)
 router.put('/', UpdateUser)
 router.put('/:id', UpdatePassword)
 router.put('/updatefollow/:id', UpdateFollow)
+router.put('/bookmark/:id', UpdateBookmark)
 
 // User Authentication
 router.post('/auth/signup', Signup)

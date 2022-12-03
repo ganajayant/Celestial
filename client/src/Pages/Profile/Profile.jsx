@@ -44,8 +44,8 @@ export default class Profile extends Component {
                         <div className="profile-stats">
                             <ul>
                                 <li><span className="profile-stat-count">{this.state.posts.length}</span> posts</li>
-                                <li><span className="profile-stat-count">188</span> followers</li>
-                                <li><span className="profile-stat-count">206</span> following</li>
+                                <li><span className="profile-stat-count">{this.props.user?.followers?.length}</span> followers</li>
+                                <li><span className="profile-stat-count">{this.props.user?.following?.length}</span> following</li>
                             </ul>
                         </div>
                         <div className="profile-bio">
@@ -62,8 +62,8 @@ export default class Profile extends Component {
                                 <img src={item.ImageURL} className="gallery-image" alt="" />
                                 <div className="gallery-item-info">
                                     <ul>
-                                        <li className="gallery-item-likes"><span className="visually-hidden">Likes:</span><i className="fas fa-heart" aria-hidden="true"></i> {item.Likes}</li>
-                                        <li className="gallery-item-comments"><span className="visually-hidden">Comments:</span><i className="fas fa-comment" aria-hidden="true"></i> 5</li>
+                                        <li className="gallery-item-likes"><span className="visually-hidden">Likes:</span><i className="fas fa-heart" aria-hidden="true"></i> {item.Likes?.length}</li>
+                                        <li className="gallery-item-comments"><span className="visually-hidden">Comments:</span><i className="fas fa-comment" aria-hidden="true"></i> {item.Comments?.length}</li>
                                     </ul>
                                 </div>
                             </div>

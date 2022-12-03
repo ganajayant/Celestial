@@ -59,7 +59,6 @@ export default class EditProfile extends Component {
                     icon: 'success',
                     confirmButtonText: 'Ok'
                 });
-                console.log(response);
                 window.location.href = '/';
             }).catch(error => {
                 Swal.fire({

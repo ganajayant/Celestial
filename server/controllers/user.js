@@ -82,7 +82,7 @@ export const GetUser = (req, res, next) => {
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET)
         let user = USER.findById(decoded._id).then(userFound => {
-            return res.status(200).json({ _id: userFound._id, name: userFound.name, username: userFound.username, email: userFound.email, createdAt: userFound.createdAt, ImageURL: userFound.ImageURL, bio: userFound.bio, followers: userFound.followers, following: userFound.following })
+            return res.status(200).json({ _id: userFound._id, name: userFound.name, username: userFound.username, email: userFound.email, createdAt: userFound.createdAt, ImageURL: userFound.ImageURL, bio: userFound.bio, followers: userFound.followers, following: userFound.following, bookmarks: userFound.bookmarks })
         })
     } catch (error) {
         res.json({ error: 'invalid token' })
@@ -259,5 +259,39 @@ export const UpdatePassword = (req, res, next) => {
         }
     }).catch(err => {
         res.status(404).send({ message: err.message });
+    })
+}
+
+export const UpdateBookmark = (req, res, next) => {
+    USER.findById(req.body.userid).then(user => {
+        if (user) {
+            if (user.bookmarks.includes(req.params.id)) {
+                USER.findByIdAndUpdate(req.body.userid, {
+                    $pull: { bookmarks: req.params.id }
+                }, (error) => {
+                    if (error) {
+                        console.log(error.message);
+                        res.json({ error })
+                    }
+                    else {
+                        console.log('Removed Bookmark');
+                    }
+                })
+            }
+            else {
+                USER.findByIdAndUpdate(req.body.userid, {
+                    $push: { bookmarks: req.params.id }
+                }, (error) => {
+                    if (error) {
+                        console.log(error.message);
+                        res.json({ error })
+                    }
+                    else {
+                        console.log('Added Bookmark');
+                    }
+                }
+                )
+            }
+        }
     })
 }
