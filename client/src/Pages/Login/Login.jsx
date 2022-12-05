@@ -41,7 +41,12 @@ export default class Login extends Component {
                 if (response.status === 200) {
                     localStorage.setItem('token', response.data.user);
                     Swal.fire('Login Success', 'Welcome to our website', 'success');
-                    window.location.href = '/'
+                    if (response.data.role === "admin") {
+                        window.location.href = "/adminportal";
+                    }
+                    else {
+                        window.location.href = '/'
+                    }
                 }
             } catch (error) {
                 Swal.fire('Login Failed', 'Please check your email and password', 'error');

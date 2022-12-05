@@ -23,6 +23,7 @@ export const Signup = (req, res, next) => {
             user.username = obj.username;
             user.email = obj.email;
             user.password = hashedPass;
+            user.role = 'user';
             user.save((error, user) => {
                 if (error) {
                     console.log(error.message);
@@ -50,9 +51,13 @@ export const Login = (req, res, next) => {
                     })
                 }
                 if (result) {
+                    let role = user.role;
+                    if (!role) {
+                        role = "user"
+                    }
                     let token = jwt.sign({ _id: user._id, name: user.username }, process.env.JWT_SECRET, { expiresIn: '1h' })
                     res.cookie('t', token, { expire: new Date() + 9999 })
-                    return res.status(200).json({ user: token })
+                    return res.status(200).json({ user: token, role: role })
                 }
                 else {
                     console.log('Password Incorrect');
@@ -82,7 +87,11 @@ export const GetUser = (req, res, next) => {
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET)
         let user = USER.findById(decoded._id).then(userFound => {
-            return res.status(200).json({ _id: userFound._id, name: userFound.name, username: userFound.username, email: userFound.email, createdAt: userFound.createdAt, ImageURL: userFound.ImageURL, bio: userFound.bio, followers: userFound.followers, following: userFound.following, bookmarks: userFound.bookmarks })
+            const role = userFound.role;
+            if (!role) {
+                role = 'user';
+            }
+            return res.status(200).json({ _id: userFound._id, name: userFound.name, username: userFound.username, role: role, email: userFound.email, createdAt: userFound.createdAt, ImageURL: userFound.ImageURL, bio: userFound.bio, followers: userFound.followers, following: userFound.following, bookmarks: userFound.bookmarks })
         })
     } catch (error) {
         res.json({ error: 'invalid token' })

@@ -1,10 +1,11 @@
 import axios from "axios";
 import jwt from "jsonwebtoken";
 import { Component } from "react";
-import { Navigate, Outlet, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Outlet, Route, Routes } from "react-router-dom";
 
 import EditProfile from "./Components/ProfileSettings/EditProfile";
 import NotFound from "./Pages/404/404";
+import Admin from "./Pages/Admin/Admin";
 import Explore from "./Pages/Explore/Explore";
 import Followers from "./Pages/Follow/Followers";
 import Following from "./Pages/Follow/Following";
@@ -55,43 +56,48 @@ export default class App extends Component {
         }
     }
     render() {
-        return <Routes>
-            <Route exact path="/login" element={<Login />} />
-            <Route exact path="/signup" element={<Signup />} />
-            <Route exact path="/" element={<PrivateOutlet />} >
-                <Route path="/" element={<Home user={this.state.userprops} />} />
-            </Route>
-            <Route exact path="/postupload" element={<PrivateOutlet />}>
-                <Route path="/postupload" element={<UploadPost user={this.state.userprops} />} />
-            </Route>
-            <Route exact path="/editprofile" element={<PrivateOutlet />}>
-                <Route path="/editprofile" element={<EditProfile user={this.state.userprops} />} />
-            </Route>
-            <Route exact path="/profile" element={<PrivateOutlet />}>
-                <Route path="/profile" element={<Profile user={this.state.userprops} />} />
-            </Route>
-            <Route exact path="/userprofile/:id" element={<PrivateOutlet />}>
-                <Route path="/userprofile/:id" element={<UserProfile user={this.state.userprops} />} />
-            </Route>
-            <Route exact path="/p/:id" element={<PrivateOutlet />}>
-                <Route path="/p/:id" element={<IndividualPost user={this.state.userprops} />} />
-            </Route>
-            <Route exact path="/explore" element={<PrivateOutlet />}>
-                <Route path="/explore" element={<Explore user={this.state.userprops} />} />
-            </Route>
-            <Route exact path="/passwordchange" element={<PrivateOutlet />}>
-                <Route path="/passwordchange" element={<PasswordChange user={this.state.userprops} />} />
-            </Route>
-            <Route exact path="/saved" element={<PrivateOutlet />}>
-                <Route path="/saved" element={<Saved user={this.state.userprops} />} />
-            </Route>
-            <Route exact path="/followers" element={<PrivateOutlet />}>
-                <Route path="/followers" element={<Followers user={this.state.userprops} />} />
-            </Route>
-            <Route exact path="/following" element={<PrivateOutlet />}>
-                <Route path="/following" element={<Following user={this.state.userprops} />} />
-            </Route>
-            <Route exact path="*" element={<NotFound />} />
-        </Routes>
+        return <BrowserRouter>
+            <Routes>
+                <Route exact path="/login" element={<Login />} />
+                <Route exact path="/signup" element={<Signup />} />
+                <Route exact path="/" element={<PrivateOutlet />} >
+                    <Route path="/" element={<Home user={this.state.userprops} />} />
+                </Route>
+                <Route exact path="/postupload" element={<PrivateOutlet />}>
+                    <Route path="/postupload" element={<UploadPost user={this.state.userprops} />} />
+                </Route>
+                <Route exact path="/editprofile" element={<PrivateOutlet />}>
+                    <Route path="/editprofile" element={<EditProfile user={this.state.userprops} />} />
+                </Route>
+                <Route exact path="/profile" element={<PrivateOutlet />}>
+                    <Route path="/profile" element={<Profile user={this.state.userprops} />} />
+                </Route>
+                <Route exact path="/userprofile/:id" element={<PrivateOutlet />}>
+                    <Route path="/userprofile/:id" element={<UserProfile user={this.state.userprops} />} />
+                </Route>
+                <Route exact path="/p/:id" element={<PrivateOutlet />}>
+                    <Route path="/p/:id" element={<IndividualPost user={this.state.userprops} />} />
+                </Route>
+                <Route exact path="/explore" element={<PrivateOutlet />}>
+                    <Route path="/explore" element={<Explore user={this.state.userprops} />} />
+                </Route>
+                <Route exact path="/passwordchange" element={<PrivateOutlet />}>
+                    <Route path="/passwordchange" element={<PasswordChange user={this.state.userprops} />} />
+                </Route>
+                <Route exact path="/saved" element={<PrivateOutlet />}>
+                    <Route path="/saved" element={<Saved user={this.state.userprops} />} />
+                </Route>
+                <Route exact path="/followers" element={<PrivateOutlet />}>
+                    <Route path="/followers" element={<Followers user={this.state.userprops} />} />
+                </Route>
+                <Route exact path="/following" element={<PrivateOutlet />}>
+                    <Route path="/following" element={<Following user={this.state.userprops} />} />
+                </Route>
+                <Route exact path="/adminportal" element={<PrivateOutlet />}>
+                    <Route path="/adminportal" element={<Admin user={this.state.userprops} />} />
+                </Route>
+                <Route exact path="*" element={<NotFound />} />
+            </Routes>
+        </BrowserRouter>
     }
 }
