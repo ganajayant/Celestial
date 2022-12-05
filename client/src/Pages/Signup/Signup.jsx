@@ -3,7 +3,7 @@ import { Component } from 'react';
 import Swal from "sweetalert2";
 
 import videoback from '../../Images/back.mp4';
-import logo from "../../Images/logo.png"
+import logo from "../../Images/logo.png";
 import './Signup.css';
 
 export default class Signup extends Component {

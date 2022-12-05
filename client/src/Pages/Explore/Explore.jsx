@@ -1,6 +1,6 @@
+import axios from "axios";
 import { Component } from "react";
 import Navbar from "../../Components/Navbar/Navbar";
-import axios from "axios";
 
 
 export default class Explore extends Component {

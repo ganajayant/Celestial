@@ -4,7 +4,7 @@ import { Component } from "react";
 import Navbar from "../../Components/Navbar/Navbar";
 
 export default class IndividualPost extends Component {
-    state = { post: '', user: '' }
+    state = { post: '', user: '', comments: [] }
 
     async componentDidMount() {
         const post = await axios.post(`http://localhost:5000/post/${window.location.pathname.split('/')[2]}`)
@@ -12,6 +12,15 @@ export default class IndividualPost extends Component {
         if (this.state.post !== '') {
             const user = await axios.get(`http://localhost:5000/user/${this.state.post.Userid}`)
             this.setState({ user: user.data })
+            let comments = []
+            for (let i = 0; i < this.state.post.Comments.length; i++) {
+                const comment = await axios.get(`http://localhost:5000/user/${this.state.post.Comments[i].user._id}`)
+                comments.push({
+                    user: comment.data,
+                    comment: this.state.post.Comments[i].comment
+                })
+            }
+            this.setState({ comments: comments })
         }
     }
     render() {
@@ -49,6 +58,28 @@ export default class IndividualPost extends Component {
                             </div>
                         </div>
                     </div>
+                    {
+                        this.state.comments.map((comment, index) => {
+                            return <div className="col-6" style={{ marginLeft: "25%", marginTop: "2.5%" }}>
+                                <div className="card">
+                                    <div className="card-header">
+                                        <div className="d-flex justify-content-between align-items-center">
+                                            <div className="user d-flex flex-row align-items-center">
+                                                <img src={comment.user
+                                                    .ImageURL} width="30" className="user-img rounded-circle mr-2" alt="User" />
+                                                <span><small className="font-weight-bold text-primary">{comment.user.username}</small></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="card-body">
+                                        <p className="card-text">
+                                            {comment.comment}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        })
+                    }
                 </div>
             </div>
         </div>

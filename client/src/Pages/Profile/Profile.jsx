@@ -2,7 +2,7 @@ import axios from "axios";
 import { Component } from "react";
 
 import Navbar from "../../Components/Navbar/Navbar";
-import "./Profile.css"
+import "./Profile.css";
 
 export default class Profile extends Component {
     constructor(props) {

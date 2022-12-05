@@ -2,7 +2,6 @@ import axios from "axios";
 import { Component } from "react";
 import Swal from "sweetalert2";
 
-
 import Navbar from "../Navbar/Navbar";
 
 export default class EditProfile extends Component {
