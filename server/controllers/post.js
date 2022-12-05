@@ -1,6 +1,7 @@
 import { cloudinaryconfig } from "../utils/cloudinary.js";
 
 import POST from "../models/Post.js";
+import USER from "../models/User.js";
 
 export const PostUpload = async (req, res, next) => {
 	res.sendStatus(200);
@@ -71,4 +72,17 @@ export const PostComment = async (req, res, next) => {
 		console.log(items);
 		res.json(items)
 	});
+}
+
+
+export const DeletePost = async (req, res, next) => {
+	const users = await USER.find({});
+	users.forEach(async (user) => {
+		if (user.bookmarks.includes(req.params.id)) {
+			await USER.findByIdAndUpdate(user._id, {
+				$pull: { bookmarks: req.params.id },
+			});
+		}
+	});
+	POST.findByIdAndDelete(req.params.id).then((items) => res.json(items));
 }

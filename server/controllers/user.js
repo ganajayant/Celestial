@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from 'jsonwebtoken';
 
+import POST from "../models/Post.js";
 import USER from "../models/User.js";
 import { cloudinaryconfig } from '../utils/cloudinary.js';
 
@@ -303,4 +304,116 @@ export const UpdateBookmark = (req, res, next) => {
             }
         }
     })
+}
+
+export const GetUsers = async (req, res, next) => {
+    try {
+        let users = await USER.find().exec();
+        res.send({ payload: users });
+    } catch (error) {
+        res.json({ error: 'Invalid User' })
+    }
+}
+
+export const DeleteUser = async (req, res, next) => {
+    try {
+        let user = await USER.findById(req.params.id).exec();
+        user.followers.forEach(follower => {
+            USER.findByIdAndUpdate(follower, {
+                $pull: { following: req.params.id }
+            }, (error) => {
+                if (error) {
+                    console.log(error.message);
+                    res.json({ error })
+                }
+                else {
+                    console.log('Unfollowed');
+                }
+            })
+        })
+        user.following.forEach(following => {
+            USER.findByIdAndUpdate(following, {
+                $pull: { followers: req.params.id }
+            }, (error) => {
+                if (error) {
+                    console.log(error.message);
+                    res.json({ error })
+                }
+                else {
+                    console.log('Unfollowed');
+                }
+            })
+        })
+        let posts = await POST.find({ Userid: req.params.id }).exec();
+        USER.find().then(users => {
+            users.forEach(user => {
+                user.bookmarks.forEach(bookmark => {
+                    posts.forEach(post => {
+                        if (bookmark == post._id) {
+                            USER.findByIdAndUpdate
+                                (user._id, {
+                                    $pull: { bookmarks: post._id }
+                                }, (error) => {
+                                    if (error) {
+                                        console.log(error.message);
+                                        res.json({ error })
+                                    }
+                                    else {
+                                        console.log('Removed Bookmark');
+                                    }
+                                })
+                        }
+                    })
+                })
+            })
+        })
+        posts.forEach(post => {
+            if (post.Likes.contains(req.params.id)) {
+                POST.findByIdAndUpdate(post._id, {
+                    $pull: { Likes: req.params.id }
+                }, (error) => {
+                    if (error) {
+                        console.log(error.message);
+                        res.json({ error })
+                    }
+                    else {
+                        console.log('Removed Like');
+                    }
+                })
+            }
+        })
+
+        POST.deleteMany({ Userid: req.params.id }, (error) => {
+            if (error) {
+                console.log(error.message);
+                res.json({ error })
+            }
+            else {
+                console.log('Posts Deleted');
+            }
+        })
+        POST.find().then(posts => {
+            posts.forEach(post => {
+                post.Comments.forEach(comment => {
+                    if (comment.user._id == req.params.id) {
+                        POST.findByIdAndUpdate(post._id, {
+                            $pull: { Comments: { user: req.params.id } }
+                        }, (error) => {
+                            if (error) {
+                                console.log(error.message);
+                                res.json({ error })
+                            }
+                            else {
+                                console.log('Comment Deleted');
+                            }
+                        })
+                    }
+                })
+            })
+        })
+        let users = await USER.findByIdAndDelete(req.params.id).exec();
+        res.send({ payload: users });
+    } catch (error) {
+        res.json({ error: 'Invalid User' })
+    }
 }

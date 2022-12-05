@@ -1,11 +1,15 @@
 import { Component } from "react";
 import { Navigate } from "react-router-dom";
 
+import Posts from "./Posts";
+import Users from "./Users";
+
 export default class Admin extends Component {
     constructor(props) {
         super(props);
         this.state = {
             user: '',
+            click: false
         }
     }
     componentDidMount() {
@@ -30,16 +34,25 @@ export default class Admin extends Component {
 
                             </a>
                             <ul className="nav nav-pills nav-flush flex-sm-column flex-row flex-nowrap mb-auto mx-auto text-center align-items-center">
-                                <li className="nav-item">
+                                <li className="nav-item" onClick={
+                                    (e) => {
+                                        e.preventDefault();
+                                        this.setState({ click: false })
+                                    }
+                                }>
                                     <i className="fas fa-users fa-lg text-dark py-3 px-2"></i>
                                 </li>
-                                <li>
+                                <li onClick={(e) => {
+                                    e.preventDefault();
+                                    this.setState({ click: true })
+                                }}>
                                     <i className="fas fa-images fa-lg text-dark py-3 px-2"></i>
                                 </li>
                             </ul>
                         </div>
                     </div>
                     <div className="col-sm p-3 min-vh-100">
+                        {this.state.click ? <Posts /> : <Users />}
                     </div>
                 </div>
             </div>
