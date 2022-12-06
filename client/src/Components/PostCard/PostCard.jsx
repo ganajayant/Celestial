@@ -24,9 +24,9 @@ export default class PostCard extends Component {
                             <img src={this.state.profile} alt="..."
                                 style={{ 'transform': 'scale(1.5)', 'width': '100%', 'position': 'absolute', 'left': '0' }} />
                         </div>
-                        <a href={`http://localhost:3000/userprofile/${this.props.userid}`}>
-                            <span className="font-weight-bold">{this.state.username}</span>
-                        </a>
+                        <span className="font-weight-bold" onClick={(e) => {
+                            window.location.href = `http://localhost:3000/userprofile/${this.props.userid}`
+                        }}>{this.state.username}</span>
                     </div>
                 </div>
                 <div className="card-body p-0">
