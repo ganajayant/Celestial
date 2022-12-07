@@ -2,7 +2,6 @@ import axios from "axios";
 import jwt from "jsonwebtoken";
 import { Component } from "react";
 import { BrowserRouter, Navigate, Outlet, Route, Routes } from "react-router-dom";
-import { Provider } from "react";
 
 import EditProfile from "./Components/ProfileSettings/EditProfile";
 import NotFound from "./Pages/404/404";
@@ -20,7 +19,6 @@ import Signup from "./Pages/Signup/Signup";
 import UploadPost from "./Pages/UploadPost";
 import UserProfile from "./Pages/UserProfile/UserProfile";
 
-import store from "./Store";
 
 function PrivateOutlet() {
     if (!localStorage.getItem('token')) {
