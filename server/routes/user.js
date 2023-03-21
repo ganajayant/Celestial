@@ -1,6 +1,7 @@
 import { Router } from "express";
 
 import { DeleteUser, GetUser, GetUsers, GetUserUsingID, GetUserUsingSearch, Login, Logout, Signup, UpdateBookmark, UpdateFollow, UpdatePassword, UpdateUser } from "../controllers/user.js";
+import JWTVERIFY from "../middlewares/jwt.js";
 
 const router = Router()
 
@@ -8,6 +9,7 @@ const router = Router()
 router.get('/', GetUser)
 router.get('/:id', GetUserUsingID)
 router.post('/:search', GetUserUsingSearch)
+// router.get('/users/all', JWTVERIFY, GetUsers)
 router.get('/users/all', GetUsers)
 router.delete('/:id', DeleteUser)
 
