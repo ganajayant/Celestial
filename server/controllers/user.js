@@ -187,10 +187,13 @@ export const SendOTP = async (req, res, next) => {
         if (user.length > 0) {
             res.status(500).json({ msg: "Email already exists." });
         }
+        else {
+            newOTP.save().then((otp) => {
+                res.status(200).json({ msg: "OTP sent to your mail" });
+            });
+        }
     });
-    newOTP.save().then((otp) => {
-        res.status(200).json({ msg: "OTP sent to your mail" });
-    });
+
 }
 export const UpdateUser = async (req, res, next) => {
     res.sendStatus(200);

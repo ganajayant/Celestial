@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 
 const JWTVERIFY = (req, res, next) => {
+    // next()
     const token = req.header("auth-token");
     if (!token) {
         console.log('No Token');
