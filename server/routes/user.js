@@ -1,27 +1,29 @@
 import { Router } from "express";
 
-import { DeleteUser, GetUser, GetUsers, GetUserUsingID, GetUserUsingSearch, Login, Logout, Signup, UpdateBookmark, UpdateFollow, UpdatePassword, UpdateUser } from "../controllers/user.js";
+import { DeleteUser, GetUser, GetUsers, GetUserUsingID, GetUserUsingSearch, Login, Logout, SendOTP, Signup, UpdateBookmark, UpdateFollow, UpdatePassword, UpdateUser } from "../controllers/user.js";
 import JWTVERIFY from "../middlewares/jwt.js";
 
 const router = Router()
 
 // User Routes
 router.get('/', GetUser)
-router.get('/:id', GetUserUsingID)
-router.post('/:search', GetUserUsingSearch)
-// router.get('/users/all', JWTVERIFY, GetUsers)
-router.get('/users/all', GetUsers)
-router.delete('/:id', DeleteUser)
+router.get('/:id', JWTVERIFY, GetUserUsingID)
+router.get('/usersearch/:search', JWTVERIFY, GetUserUsingSearch)
+router.get('/users/all', JWTVERIFY, GetUsers)
+
+// User Delete
+router.delete('/:id', JWTVERIFY, DeleteUser)
 
 // User Update
-router.put('/', UpdateUser)
-router.put('/:id', UpdatePassword)
-router.put('/updatefollow/:id', UpdateFollow)
-router.put('/bookmark/:id', UpdateBookmark)
+router.put('/', JWTVERIFY, UpdateUser)
+router.put('/:id', JWTVERIFY, UpdatePassword)
+router.put('/updatefollow/:id', JWTVERIFY, UpdateFollow)
+router.put('/bookmark/:id', JWTVERIFY, UpdateBookmark)
 
 // User Authentication
 router.post('/auth/signup', Signup)
 router.post('/auth/login/', Login)
 router.get('/auth/logout', Logout)
+router.post('/auth/otp', SendOTP)
 
 export default router;

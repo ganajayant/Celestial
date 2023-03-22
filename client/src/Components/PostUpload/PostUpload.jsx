@@ -27,10 +27,12 @@ export default class PostUpload extends Component {
 		data.append("caption", this.state.caption);
 		data.append("userid", this.props.user._id);
 		try {
-			await axios
-				.post("http://localhost:5000/post", data, {
-					headers: { "Content-Type": "multipart/form-data" },
-				})
+			await axios.post("http://localhost:5000/post", data, {
+				headers: {
+					"Content-Type": "multipart/form-data",
+					"auth-token": localStorage.getItem('token')
+				},
+			})
 				.then((response) => {
 					if (response.status === 200) {
 						Swal.fire(

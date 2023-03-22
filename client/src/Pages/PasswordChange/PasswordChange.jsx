@@ -57,7 +57,8 @@ export default class PasswordChange extends Component {
             try {
                 const response = await axios.put(`http://localhost:5000/user/${this.props.user._id}`, JSON.stringify({ userid: this.props.user._id, oldpassword: this.state.oldpassword, newpassword: this.state.newpassword }), {
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        "auth-token": localStorage.getItem('token')
                     }
                 })
                 if (response.status === 200) {

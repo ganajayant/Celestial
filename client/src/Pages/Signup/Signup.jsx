@@ -10,8 +10,9 @@ export default class Signup extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            email: '', fullname: '', username: '', password: '', formErrors: { username: '', password: '' },
-            passwordValid: false, usernameValid: false
+            email: '', fullname: '', username: '', password: '', formErrors: { username: '', password: '', otp: '' },
+            passwordValid: false, usernameValid: false, otpValid: false,
+            otp: ''
         };
     }
 
@@ -39,8 +40,19 @@ export default class Signup extends Component {
                 this.setState({ formErrors: { password: "Password must contain at least 8 characters, one uppercase, one lowercase, one number and one special case character" } });
             }
         }
+        else if (event.target.name === "otp") {
+            const otpregex = /^[0-9]{6}$/;
+            if (otpregex.test(event.target.value)) {
+                this.setState({ otpValid: true });
+                this.setState({ formErrors: { otp: '' } });
+            }
+            else {
+                this.setState({ otpValid: false });
+                this.setState({ formErrors: { otp: "OTP must be 6 digits" } });
+            }
+        }
         else {
-            this.setState({ formErrors: { username: '', password: '' } });
+            this.setState({ formErrors: { username: '', password: '', otp: '' } });
         }
     }
 
@@ -48,7 +60,7 @@ export default class Signup extends Component {
         event.preventDefault();
         if (this.state.usernameValid && this.state.passwordValid) {
             try {
-                const response = await axios.post('http://localhost:5000/user/auth/signup', JSON.stringify({ email: this.state.email, fullname: this.state.fullname, username: this.state.username, password: this.state.password }));
+                const response = await axios.post('http://localhost:5000/user/auth/signup', JSON.stringify({ email: this.state.email, fullname: this.state.fullname, username: this.state.username, password: this.state.password, otp: this.state.otp }));
                 if (response.status === 200) {
                     Swal.fire({
                         title: 'Success!',
@@ -81,8 +93,41 @@ export default class Signup extends Component {
                                 <img src={logo} alt="" style={{ width: "12.5em", marginLeft: "3.125em" }} />
                                 {this.state.formErrors.username && <span style={{ color: "red", fontSize: "13px" }} >{this.state.formErrors.username}</span>}
                                 {this.state.formErrors.password && <span style={{ color: "red", fontSize: "13px" }} >{this.state.formErrors.password}</span>}
+                                {this.state.formErrors.otp && <span style={{ color: "red", fontSize: "13px" }} >{this.state.formErrors.otp}</span>}
                                 <div className="form-floating mb-3">
                                     <input className="form-control" name="email" placeholder="Email Address" value={this.state.value} onChange={this.handleChange} required={true} type="email" /><label>Email</label>
+                                    <button className="btn btn-dark fw-bold w-100 bg-gradient" onChange={this.handleChange
+                                    } onClick={
+                                        (e) => {
+                                            e.preventDefault();
+                                            const emailregex = new RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$");
+                                            if (emailregex.test(this.state.email)) {
+                                                axios.post('http://localhost:5000/user/auth/otp', {
+                                                    email: this.state.email
+                                                }).then((res) => {
+                                                    if (res.status === 200) {
+                                                        Swal.fire({
+                                                            title: 'Success!',
+                                                            text: 'OTP sent to your email',
+                                                            icon: 'success',
+                                                            confirmButtonText: 'Ok'
+                                                        });
+                                                    }
+                                                }).catch((err) => {
+                                                    Swal.fire({
+                                                        title: 'Error!',
+                                                        text: 'Email already exists',
+                                                        icon: 'error',
+                                                        confirmButtonText: 'Ok'
+                                                    });
+                                                });
+                                            }
+                                        }
+                                    } type="submit" href="/#">Send OTP</button>
+                                </div>
+                                <div className="form-floating mb-3">
+                                    {/* otp field with button */}
+                                    <input className="form-control" name="otp" placeholder="OTP" value={this.state.value} onChange={this.handleChange} required={true} type="text" /><label>OTP</label>
                                 </div>
                                 <div className="form-floating mb-3">
                                     <input className="form-control" name="fullname" placeholder="Full Name" value={this.state.value} onChange={this.handleChange} required={true} type="text" /><label>Full Name</label>

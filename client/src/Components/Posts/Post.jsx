@@ -14,6 +14,10 @@ export default class Posts extends Component {
         if (this.props.user) {
             const json = await axios.post('http://localhost:5000/post/posts/list', {
                 "list": this.props.user.following
+            }, {
+                headers: {
+                    "auth-token": localStorage.getItem('token')
+                }
             })
 
             this.setState({ posts: json.data })

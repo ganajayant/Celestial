@@ -1,43 +1,73 @@
 import bcrypt from "bcrypt";
 import jwt from 'jsonwebtoken';
 
+import OTP from "../models/OTP.js";
 import POST from "../models/Post.js";
 import USER from "../models/User.js";
 import { cloudinaryconfig } from '../utils/cloudinary.js';
+import { transporter } from "../utils/nodemailer.js";
 
 export const Signup = (req, res, next) => {
     let obj = JSON.parse(Object.keys(req.body));
-    bcrypt.hash(obj.password, 10, (err, hashedPass) => {
-        if (err) {
-            res.json({
-                error: err
-            })
-        }
-        else {
-            const user = new USER({
-                name: obj.fullname,
-                username: obj.username,
-                email: obj.email,
-                password: obj.password
-            })
-            user.name = obj.fullname;
-            user.username = obj.username;
-            user.email = obj.email;
-            user.password = hashedPass;
-            user.role = 'user';
-            user.save((error, user) => {
-                if (error) {
-                    console.log(error.message);
-                    res.status(401).send({ message: error.message });
-                }
-                else {
-                    res.json({
-                        message: 'User Added Successfully!',
-                        user
+    const email = obj.email;
+    const givenotp = obj.otp + "";
+    OTP.findOne({ email: email }).then(user => {
+        if (user) {
+            const otp = user.OTP;
+            const otpTime = user.OTPTime;
+            const currentTime = new Date().getTime();
+            const diff = currentTime - otpTime;
+            if (diff > 300000) {
+                console.log('OTP Expired');
+                res.status(404).json({
+                    message: 'OTP Expired'
+                })
+            }
+            else {
+                if (otp === givenotp) {
+                    bcrypt.hash(obj.password, 10, (err, hashedPass) => {
+                        if (err) {
+                            res.json({
+                                error: err
+                            })
+                        }
+                        else {
+                            const user = new USER({
+                                name: obj.fullname,
+                                username: obj.username,
+                                email: obj.email,
+                                password: obj.password
+                            })
+                            user.name = obj.fullname;
+                            user.username = obj.username;
+                            user.email = obj.email;
+                            user.password = hashedPass;
+                            user.role = 'user';
+                            user.save((error, user) => {
+                                if (error) {
+                                    console.log(error.message);
+                                    res.status(401).send({ message: error.message });
+                                }
+                                else {
+                                    res.json({
+                                        message: 'User Added Successfully!',
+                                        user
+                                    })
+                                }
+                            })
+                        }
                     })
                 }
+            }
+        }
+        else {
+            console.log('no user found');
+            res.status(404).json({
+                message: 'No user found!'
             })
         }
+    }).catch(err => {
+        res.status(404).send({ message: err.message });
     })
 }
 
@@ -123,7 +153,45 @@ export const GetUserUsingSearch = async (req, res, next) => {
     }
 }
 
-
+export const SendOTP = async (req, res, next) => {
+    const email = req.body.email;
+    const otp = Math.floor(100000 + Math.random() * 900000) + "";
+    const message = {
+        from: "admin@celestial.com",
+        to: email,
+        subject: "Your OTP",
+        text: `Your OTP is ${otp}. It will expire in 5 minutes.`,
+    };
+    transporter.sendMail(message, (error, info) => {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log(`Email sent: ${info.response}`);
+        }
+    });
+    const newOTP = new OTP({
+        email: email,
+        OTP: otp,
+        OTPTIME: Date.now(),
+    });
+    OTP.find({ email: email }).then((otp) => {
+        if (otp.length > 0) {
+            OTP.deleteMany({ email: email }, (err) => {
+                if (err) {
+                    res.status(500).json({ msg: "Error deleting OTP" });
+                }
+            });
+        }
+    });
+    USER.find({ email: email }).then((user) => {
+        if (user.length > 0) {
+            res.status(500).json({ msg: "Email already exists." });
+        }
+    });
+    newOTP.save().then((otp) => {
+        res.status(200).json({ msg: "OTP sent to your mail" });
+    });
+}
 export const UpdateUser = async (req, res, next) => {
     res.sendStatus(200);
     console.log(req.file);

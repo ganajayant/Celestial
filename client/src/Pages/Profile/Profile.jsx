@@ -15,7 +15,11 @@ export default class Profile extends Component {
         }
     }
     getData = () => {
-        axios.get(`http://localhost:5000/post/${this.props.user._id}`)
+        axios.get(`http://localhost:5000/post/${this.props.user._id}`, {
+            headers: {
+                "auth-token": localStorage.getItem('token')
+            }
+        })
             .then(e => {
                 this.setState({ posts: e.data })
             })

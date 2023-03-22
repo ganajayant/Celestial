@@ -50,7 +50,10 @@ export default class EditProfile extends Component {
         data.append('username', this.state.username)
         try {
             await axios.put('http://localhost:5000/user', data, {
-                headers: { "Content-Type": "multipart/form-data" }
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    "auth-token": localStorage.getItem('token')
+                }
             }).then(response => {
                 Swal.fire({
                     title: 'Success',

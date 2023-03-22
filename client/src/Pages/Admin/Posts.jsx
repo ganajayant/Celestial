@@ -13,6 +13,10 @@ export default class Posts extends Component {
     componentDidMount() {
         axios.get("http://localhost:5000/post/").then((res) => {
             this.setState({ posts: res.data })
+        }, {
+            headers: {
+                "auth-token": localStorage.getItem('token')
+            }
         })
     }
     render() {
@@ -68,7 +72,11 @@ export default class Posts extends Component {
                                                                 confirmButtonText: 'Yes, delete it!'
                                                             }).then((result) => {
                                                                 if (result.isConfirmed) {
-                                                                    axios.delete(`http://localhost:5000/post/${post._id}`).then((res) => {
+                                                                    axios.delete(`http://localhost:5000/post/${post._id}`, {
+                                                                        headers: {
+                                                                            "auth-token": localStorage.getItem('token')
+                                                                        }
+                                                                    }).then((res) => {
                                                                         this.componentDidMount()
                                                                         Swal.fire(
                                                                             'Deleted!',

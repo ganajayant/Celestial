@@ -10,7 +10,11 @@ export default class Explore extends Component {
     }
     componentDidMount = async () => {
         try {
-            const json = await axios.get('http://localhost:5000/post')
+            const json = await axios.get('http://localhost:5000/post', {
+                headers: {
+                    "auth-token": localStorage.getItem('token')
+                }
+            })
             this.setState({ posts: json.data })
         } catch (error) {
 

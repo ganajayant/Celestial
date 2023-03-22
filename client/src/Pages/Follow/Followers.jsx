@@ -10,7 +10,11 @@ export default class Followers extends Component {
             const arr = this.props.user.followers
             const users = []
             for (let i = 0; i < arr.length; i++) {
-                const response = axios.get(`http://localhost:5000/user/${arr[i]}`);
+                const response = axios.get(`http://localhost:5000/user/${arr[i]}`, {
+                    headers: {
+                        "auth-token": localStorage.getItem('token')
+                    }
+                });
                 const { data } = await response;
                 users.push(data);
             }
@@ -46,6 +50,10 @@ export default class Followers extends Component {
                                 axios.put(`http://localhost:5000/user/updatefollow/${this.props.user._id}`, {
                                     followedBy: item._id,
                                     follows: this.props.user?.followers?.includes(item._id)
+                                }, {
+                                    headers: {
+                                        "auth-token": localStorage.getItem('token')
+                                    }
                                 })
                                 this.setState({ data: this.state.data.filter((x) => x._id !== item._id) })
                             }}> Remove</button>

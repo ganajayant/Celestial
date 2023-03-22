@@ -11,11 +11,19 @@ export default class UserProfile extends Component {
         this.state = { posts: [], user: '', followers: [] }
     }
     async componentDidMount() {
-        await axios.get(`http://localhost:5000/user/${window.location.pathname.split('/')[2]}`).then(e => {
+        await axios.get(`http://localhost:5000/user/${window.location.pathname.split('/')[2]}`, {
+            headers: {
+                "auth-token": localStorage.getItem('token')
+            }
+        }).then(e => {
             this.setState({ user: e.data, followers: e.data.followers })
         })
         if (this.state.user !== '') {
-            await axios.get(`http://localhost:5000/post/${this.state.user._id}`)
+            await axios.get(`http://localhost:5000/post/${this.state.user._id}`, {
+                headers: {
+                    "auth-token": localStorage.getItem('token')
+                }
+            })
                 .then(e => {
                     console.log(e);
                     this.setState({ posts: e.data })
@@ -44,6 +52,10 @@ export default class UserProfile extends Component {
                                     axios.put(`http://localhost:5000/user/updatefollow/${this.state.user._id}`, {
                                         followedBy: this.props.user._id,
                                         follows: this.state.user?.followers?.includes(this.props.user._id)
+                                    }, {
+                                        headers: {
+                                            "auth-token": localStorage.getItem('token')
+                                        }
                                     })
                                     if (this.state?.followers?.includes(this.props.user._id)) {
                                         this.setState({ followers: this.state.followers.filter((x) => x !== this.props.user._id) })

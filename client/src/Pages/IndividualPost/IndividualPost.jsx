@@ -7,18 +7,30 @@ export default class IndividualPost extends Component {
     state = { post: '', user: '', comments: [], liked: false, likes: [] }
 
     async componentDidMount() {
-        const post = await axios.post(`http://localhost:5000/post/${window.location.pathname.split('/')[2]}`)
+        const post = await axios.post(`http://localhost:5000/post/${window.location.pathname.split('/')[2]}`, {}, {
+            headers: {
+                "auth-token": localStorage.getItem('token')
+            }
+        })
         this.setState({ post: post.data })
         if (this.state.post !== '') {
             this.setState({
                 likes: this.state.post.Likes,
                 liked: this.state.post.Likes.includes(this.props.user._id)
             })
-            const user = await axios.get(`http://localhost:5000/user/${this.state.post.Userid}`)
+            const user = await axios.get(`http://localhost:5000/user/${this.state.post.Userid}`, {
+                headers: {
+                    "auth-token": localStorage.getItem('token')
+                }
+            })
             this.setState({ user: user.data })
             let comments = []
             for (let i = 0; i < this.state.post.Comments.length; i++) {
-                const comment = await axios.get(`http://localhost:5000/user/${this.state.post.Comments[i].user._id}`)
+                const comment = await axios.get(`http://localhost:5000/user/${this.state.post.Comments[i].user._id}`, {
+                    headers: {
+                        "auth-token": localStorage.getItem('token')
+                    }
+                })
                 comments.push({
                     user: comment.data,
                     comment: this.state.post.Comments[i].comment

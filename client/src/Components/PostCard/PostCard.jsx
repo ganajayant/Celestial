@@ -7,7 +7,11 @@ export default class PostCard extends Component {
     state = { username: '', profile: '', comment: '', liked: false, likes: this.props.likes, bookmarks: this.props.loggineduser?.bookmarks }
 
     async componentDidMount() {
-        const response = await axios.get(`http://localhost:5000/user/${this.props.userid}`)
+        const response = await axios.get(`http://localhost:5000/user/${this.props.userid}`, {
+            headers: {
+                "auth-token": localStorage.getItem('token')
+            }
+        })
         const { data } = response;
         this.setState({ username: data.username, profile: data.ImageURL, comment: '' })
         if (this.props.loggineduser) {
@@ -51,6 +55,10 @@ export default class PostCard extends Component {
                                     axios.put(`http://localhost:5000/post/like/${this.props.id}`, {
                                         "userid": this.props.loggineduser._id,
                                         "liked": this.props.likes.includes(this.props.loggineduser._id)
+                                    }, {
+                                        headers: {
+                                            "auth-token": localStorage.getItem('token')
+                                        }
                                     })
                                 }} >
                                     {this.state.liked ? <i className="fa fa-heart" style={{ color: 'red' }}></i> : <i className="fa fa-heart-o"></i>}
@@ -80,6 +88,10 @@ export default class PostCard extends Component {
                                 }
                                 axios.put(`http://localhost:5000/user/bookmark/${this.props.id}`, {
                                     "userid": this.props.loggineduser._id,
+                                }, {
+                                    headers: {
+                                        "auth-token": localStorage.getItem('token')
+                                    }
                                 })
                             }
                             } >
@@ -125,6 +137,10 @@ export default class PostCard extends Component {
                                 await axios.put(`http://localhost:5000/post/comment/${this.props.id}`, {
                                     "commenteduser": this.props.loggineduser,
                                     "comment": this.state.comment
+                                }, {
+                                    headers: {
+                                        "auth-token": localStorage.getItem('token')
+                                    }
                                 }).then(() => {
                                     this.setState({ comment: '' })
                                     window.location.href = `p/${this.props.id}`;

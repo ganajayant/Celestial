@@ -10,7 +10,11 @@ export default class Users extends Component {
         }
     }
     componentDidMount() {
-        axios.get("http://localhost:5000/user/users/all").then((res) => {
+        axios.get("http://localhost:5000/user/users/all", {
+            headers: {
+                "auth-token": localStorage.getItem('token')
+            }
+        }).then((res) => {
             let users = res.data.payload.filter((user) => {
                 return user.role !== "admin"
             })
@@ -45,7 +49,11 @@ export default class Users extends Component {
                                     confirmButtonText: "Yes, delete it!"
                                 }).then((result) => {
                                     if (result.isConfirmed) {
-                                        axios.delete(`http://localhost:5000/user/${user._id}`).then((res) => {
+                                        axios.delete(`http://localhost:5000/user/${user._id}`, {
+                                            headers: {
+                                                "auth-token": localStorage.getItem('token')
+                                            }
+                                        }).then((res) => {
                                             this.componentDidMount();
                                             Swal.fire(
                                                 "Deleted!",

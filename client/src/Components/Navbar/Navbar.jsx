@@ -18,7 +18,11 @@ export default class Navbar extends Component {
     handleChange = async (event) => {
         this.setState({ [event.target.name]: event.target.value });
         if (this.state.search !== '') {
-            await axios.post(`http://localhost:5000/user/${this.state.search}`)
+            await axios.get(`http://localhost:5000/user/usersearch/${this.state.search}`, {
+                headers: {
+                    "auth-token": localStorage.getItem('token')
+                }
+            })
                 .then(res => {
                     const indexOfObject = res.data.payload.findIndex(object => {
                         return object._id === this.props.user._id;
