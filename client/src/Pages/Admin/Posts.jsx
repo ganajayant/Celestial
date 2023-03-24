@@ -1,6 +1,6 @@
-import axios from "axios";
 import Swal from "sweetalert2";
 
+import axios from "../../AxiosConfig";
 import { Component } from "react";
 
 export default class Posts extends Component {
@@ -11,7 +11,7 @@ export default class Posts extends Component {
         }
     }
     componentDidMount() {
-        axios.get("http://localhost:5000/post/").then((res) => {
+        axios.get("post/").then((res) => {
             this.setState({ posts: res.data })
         }, {
             headers: {
@@ -72,7 +72,7 @@ export default class Posts extends Component {
                                                                 confirmButtonText: 'Yes, delete it!'
                                                             }).then((result) => {
                                                                 if (result.isConfirmed) {
-                                                                    axios.delete(`http://localhost:5000/post/${post._id}`, {
+                                                                    axios.delete(`post/${post._id}`, {
                                                                         headers: {
                                                                             "auth-token": localStorage.getItem('token')
                                                                         }

@@ -1,7 +1,7 @@
-import axios from "axios";
 import { Component } from "react";
 import Swal from "sweetalert2";
 
+import axios from "../../AxiosConfig";
 import Navbar from "../../Components/Navbar/Navbar";
 
 export default class PasswordChange extends Component {
@@ -55,7 +55,7 @@ export default class PasswordChange extends Component {
         event.preventDefault();
         if (this.state.passwordValid) {
             try {
-                const response = await axios.put(`http://localhost:5000/user/${this.props.user._id}`, JSON.stringify({ userid: this.props.user._id, oldpassword: this.state.oldpassword, newpassword: this.state.newpassword }), {
+                const response = await axios.put(`user/${this.props.user._id}`, JSON.stringify({ userid: this.props.user._id, oldpassword: this.state.oldpassword, newpassword: this.state.newpassword }), {
                     headers: {
                         'Content-Type': 'application/json',
                         "auth-token": localStorage.getItem('token')
@@ -64,7 +64,7 @@ export default class PasswordChange extends Component {
                 if (response.status === 200) {
                     Swal.fire('Password Changed', 'Your password has been changed', 'success');
                     localStorage.removeItem('token');
-                    await axios.get('http://localhost:5000/user/auth/logout')
+                    await axios.get('user/auth/logout')
                     Swal.fire('Logout Success', 'See you again', 'success');
                     window.location.href = '/login';
                 }

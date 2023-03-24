@@ -1,6 +1,6 @@
-import axios from "axios";
 import { Component } from "react";
 
+import axios from "../../AxiosConfig";
 import Navbar from "../../Components/Navbar/Navbar";
 
 export default class IndividualPost extends Component {
@@ -10,7 +10,7 @@ export default class IndividualPost extends Component {
             const arr = this.props.user.bookmarks
             const posts = []
             for (let i = 0; i < arr.length; i++) {
-                const response = axios.post(`http://localhost:5000/post/${arr[i]}`, {}, {
+                const response = axios.post(`post/${arr[i]}`, {}, {
                     headers: {
                         "auth-token": localStorage.getItem('token')
                     }

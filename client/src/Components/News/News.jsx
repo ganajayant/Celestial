@@ -1,6 +1,6 @@
-import axios from 'axios';
 import { Component } from "react";
 
+import axios from "../../AxiosConfig";
 import NewsCard from "../NewsCard/NewsCard";
 
 export default class News extends Component {
@@ -8,7 +8,7 @@ export default class News extends Component {
 
     async componentDidMount() {
         try {
-            const json = await axios.get('http://localhost:5000/news')
+            const json = await axios.get('news')
             this.setState({ feed: json.data })
         } catch (error) {
             console.log(error);

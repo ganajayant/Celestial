@@ -1,6 +1,6 @@
-import axios from "axios";
 import { Component } from "react";
 
+import axios from "../../AxiosConfig";
 import Navbar from "../../Components/Navbar/Navbar";
 import "./Profile.css";
 
@@ -15,7 +15,7 @@ export default class Profile extends Component {
         }
     }
     getData = () => {
-        axios.get(`http://localhost:5000/post/${this.props.user._id}`, {
+        axios.get(`post/${this.props.user._id}`, {
             headers: {
                 "auth-token": localStorage.getItem('token')
             }

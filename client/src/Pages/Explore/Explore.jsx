@@ -1,7 +1,7 @@
-import axios from "axios";
 import { Component } from "react";
 import Navbar from "../../Components/Navbar/Navbar";
 
+import axios from "../../AxiosConfig";
 
 export default class Explore extends Component {
     constructor(props) {
@@ -10,7 +10,7 @@ export default class Explore extends Component {
     }
     componentDidMount = async () => {
         try {
-            const json = await axios.get('http://localhost:5000/post', {
+            const json = await axios.get('post', {
                 headers: {
                     "auth-token": localStorage.getItem('token')
                 }

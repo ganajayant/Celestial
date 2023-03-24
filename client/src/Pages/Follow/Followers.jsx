@@ -1,6 +1,6 @@
-import axios from "axios";
 import { Component } from "react";
 
+import axios from "../../AxiosConfig";
 import Navbar from "../../Components/Navbar/Navbar";
 
 export default class Followers extends Component {
@@ -10,7 +10,7 @@ export default class Followers extends Component {
             const arr = this.props.user.followers
             const users = []
             for (let i = 0; i < arr.length; i++) {
-                const response = axios.get(`http://localhost:5000/user/${arr[i]}`, {
+                const response = axios.get(`user/${arr[i]}`, {
                     headers: {
                         "auth-token": localStorage.getItem('token')
                     }
@@ -47,7 +47,7 @@ export default class Followers extends Component {
                             </div>
                             <button className="btn profile-edit-btn" onClick={async (e) => {
                                 e.preventDefault();
-                                axios.put(`http://localhost:5000/user/updatefollow/${this.props.user._id}`, {
+                                axios.put(`user/updatefollow/${this.props.user._id}`, {
                                     followedBy: item._id,
                                     follows: this.props.user?.followers?.includes(item._id)
                                 }, {

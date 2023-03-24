@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../../AxiosConfig';
 import { Component } from 'react';
 import Swal from "sweetalert2";
 
@@ -11,14 +11,14 @@ export default class Navbar extends Component {
     }
     Click = async () => {
         localStorage.removeItem('token');
-        await axios.get('http://localhost:5000/user/auth/logout')
+        await axios.get('user/auth/logout')
         Swal.fire('Logout Success', 'See you again', 'success');
         window.location.href = '/login';
     }
     handleChange = async (event) => {
         this.setState({ [event.target.name]: event.target.value });
         if (this.state.search !== '') {
-            await axios.get(`http://localhost:5000/user/usersearch/${this.state.search}`, {
+            await axios.get(`user/usersearch/${this.state.search}`, {
                 headers: {
                     "auth-token": localStorage.getItem('token')
                 }

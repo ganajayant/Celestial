@@ -1,8 +1,8 @@
-import axios from "axios";
 import { Component } from "react";
 import { Navigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
+import axios from "../../AxiosConfig";
 import videoback from '../../Images/back.mp4';
 import logo from "../../Images/logo.png";
 import './Login.css';
@@ -37,7 +37,7 @@ export default class Login extends Component {
         event.preventDefault();
         if (this.state.passwordValid) {
             try {
-                const response = await axios.post('http://localhost:5000/user/auth/login', JSON.stringify({ email: this.state.email, password: this.state.password }))
+                const response = await axios.post('user/auth/login', JSON.stringify({ email: this.state.email, password: this.state.password }))
                 if (response.status === 200) {
                     localStorage.setItem('token', response.data.user);
                     Swal.fire('Login Success', 'Welcome to our website', 'success');

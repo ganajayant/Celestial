@@ -1,6 +1,6 @@
-import axios from "axios";
 import { Component } from "react";
 
+import axios from "../../AxiosConfig";
 import PostCard from "../PostCard/PostCard";
 
 export default class Posts extends Component {
@@ -12,7 +12,7 @@ export default class Posts extends Component {
     }
     async componentDidMount() {
         if (this.props.user) {
-            const json = await axios.post('http://localhost:5000/post/posts/list', {
+            const json = await axios.post('post/posts/list', {
                 "list": this.props.user.following
             }, {
                 headers: {

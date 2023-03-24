@@ -1,7 +1,7 @@
-import axios from "axios";
 import { Component } from "react";
 import Swal from "sweetalert2";
 
+import axios from "../../AxiosConfig";
 export default class PostUpload extends Component {
 	constructor(props) {
 		super(props);
@@ -27,7 +27,7 @@ export default class PostUpload extends Component {
 		data.append("caption", this.state.caption);
 		data.append("userid", this.props.user._id);
 		try {
-			await axios.post("http://localhost:5000/post", data, {
+			await axios.post("post", data, {
 				headers: {
 					"Content-Type": "multipart/form-data",
 					"auth-token": localStorage.getItem('token')

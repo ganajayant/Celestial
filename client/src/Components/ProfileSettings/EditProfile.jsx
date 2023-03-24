@@ -1,8 +1,9 @@
-import axios from "axios";
 import { Component } from "react";
 import Swal from "sweetalert2";
 
 import Navbar from "../Navbar/Navbar";
+
+import axios from "../../AxiosConfig";
 
 export default class EditProfile extends Component {
     constructor(props) {
@@ -49,7 +50,7 @@ export default class EditProfile extends Component {
         data.append('name', this.state.name)
         data.append('username', this.state.username)
         try {
-            await axios.put('http://localhost:5000/user', data, {
+            await axios.put('user', data, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                     "auth-token": localStorage.getItem('token')

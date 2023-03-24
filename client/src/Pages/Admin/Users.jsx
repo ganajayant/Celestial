@@ -1,7 +1,7 @@
-import axios from "axios";
 import Swal from "sweetalert2";
 
 import { Component } from "react";
+import axios from "../../AxiosConfig";
 export default class Users extends Component {
     constructor(props) {
         super(props);
@@ -10,7 +10,7 @@ export default class Users extends Component {
         }
     }
     componentDidMount() {
-        axios.get("http://localhost:5000/user/users/all", {
+        axios.get("user/users/all", {
             headers: {
                 "auth-token": localStorage.getItem('token')
             }
@@ -49,7 +49,7 @@ export default class Users extends Component {
                                     confirmButtonText: "Yes, delete it!"
                                 }).then((result) => {
                                     if (result.isConfirmed) {
-                                        axios.delete(`http://localhost:5000/user/${user._id}`, {
+                                        axios.delete(`user/${user._id}`, {
                                             headers: {
                                                 "auth-token": localStorage.getItem('token')
                                             }

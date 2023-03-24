@@ -1,4 +1,3 @@
-import axios from "axios";
 import jwt from "jsonwebtoken";
 import { Component } from "react";
 import { BrowserRouter, Navigate, Outlet, Route, Routes } from "react-router-dom";
@@ -19,6 +18,7 @@ import Signup from "./Pages/Signup/Signup";
 import UploadPost from "./Pages/UploadPost";
 import UserProfile from "./Pages/UserProfile/UserProfile";
 
+import axios from "./AxiosConfig";
 
 function PrivateOutlet() {
     if (!localStorage.getItem('token')) {
@@ -45,7 +45,7 @@ export default class App extends Component {
             else {
                 const jwtPayload = JSON.parse(window.atob(localStorage.getItem('token').split('.')[1]))
                 if (Date.now() < jwtPayload.exp * 1000) {
-                    const response = await axios.get('http://localhost:5000/user', {
+                    const response = await axios.get('user/', {
                         headers: {
                             "x-access-token": localStorage.getItem('token')
                         }

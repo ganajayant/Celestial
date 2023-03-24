@@ -1,7 +1,7 @@
-import axios from 'axios';
 import { Component } from 'react';
 import Swal from "sweetalert2";
 
+import axios from "../../AxiosConfig";
 import videoback from '../../Images/back.mp4';
 import logo from "../../Images/logo.png";
 import './Signup.css';
@@ -60,7 +60,7 @@ export default class Signup extends Component {
         event.preventDefault();
         if (this.state.usernameValid && this.state.passwordValid) {
             try {
-                const response = await axios.post('http://localhost:5000/user/auth/signup', JSON.stringify({ email: this.state.email, fullname: this.state.fullname, username: this.state.username, password: this.state.password, otp: this.state.otp }));
+                const response = await axios.post('user/auth/signup', JSON.stringify({ email: this.state.email, fullname: this.state.fullname, username: this.state.username, password: this.state.password, otp: this.state.otp }));
                 if (response.status === 200) {
                     Swal.fire({
                         title: 'Success!',
@@ -102,7 +102,7 @@ export default class Signup extends Component {
                                             e.preventDefault();
                                             const emailregex = new RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$");
                                             if (emailregex.test(this.state.email)) {
-                                                axios.post('http://localhost:5000/user/auth/otp', {
+                                                axios.post('user/auth/otp', {
                                                     email: this.state.email
                                                 }).then((res) => {
                                                     if (res.status === 200) {

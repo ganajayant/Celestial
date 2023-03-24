@@ -1,13 +1,13 @@
-import axios from "axios";
 import { Component } from "react";
 
+import axios from "../../AxiosConfig";
 import './PostCard.css';
 
 export default class PostCard extends Component {
     state = { username: '', profile: '', comment: '', liked: false, likes: this.props.likes, bookmarks: this.props.loggineduser?.bookmarks }
 
     async componentDidMount() {
-        const response = await axios.get(`http://localhost:5000/user/${this.props.userid}`, {
+        const response = await axios.get(`user/${this.props.userid}`, {
             headers: {
                 "auth-token": localStorage.getItem('token')
             }
@@ -52,7 +52,7 @@ export default class PostCard extends Component {
                                     this.setState({
                                         liked: !this.state.liked,
                                     })
-                                    axios.put(`http://localhost:5000/post/like/${this.props.id}`, {
+                                    axios.put(`post/like/${this.props.id}`, {
                                         "userid": this.props.loggineduser._id,
                                         "liked": this.props.likes.includes(this.props.loggineduser._id)
                                     }, {
@@ -86,7 +86,7 @@ export default class PostCard extends Component {
                                 else {
                                     this.setState({ bookmarks: [...this.state.bookmarks, this.props.id] })
                                 }
-                                axios.put(`http://localhost:5000/user/bookmark/${this.props.id}`, {
+                                axios.put(`user/bookmark/${this.props.id}`, {
                                     "userid": this.props.loggineduser._id,
                                 }, {
                                     headers: {
@@ -134,7 +134,7 @@ export default class PostCard extends Component {
                             } />
                             <button className="btn btn-primary position-absolute btn-ig" onClick={async (e) => {
                                 e.preventDefault();
-                                await axios.put(`http://localhost:5000/post/comment/${this.props.id}`, {
+                                await axios.put(`post/comment/${this.props.id}`, {
                                     "commenteduser": this.props.loggineduser,
                                     "comment": this.state.comment
                                 }, {

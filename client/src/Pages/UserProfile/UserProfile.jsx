@@ -1,7 +1,7 @@
-import axios from "axios";
 import { Component } from "react";
 import { Link } from "react-router-dom";
 
+import axios from "../../AxiosConfig";
 import Navbar from "../../Components/Navbar/Navbar";
 import "./UserProfile.css";
 
@@ -11,7 +11,7 @@ export default class UserProfile extends Component {
         this.state = { posts: [], user: '', followers: [] }
     }
     async componentDidMount() {
-        await axios.get(`http://localhost:5000/user/${window.location.pathname.split('/')[2]}`, {
+        await axios.get(`user/${window.location.pathname.split('/')[2]}`, {
             headers: {
                 "auth-token": localStorage.getItem('token')
             }
@@ -19,7 +19,7 @@ export default class UserProfile extends Component {
             this.setState({ user: e.data, followers: e.data.followers })
         })
         if (this.state.user !== '') {
-            await axios.get(`http://localhost:5000/post/${this.state.user._id}`, {
+            await axios.get(`post/${this.state.user._id}`, {
                 headers: {
                     "auth-token": localStorage.getItem('token')
                 }
@@ -49,7 +49,7 @@ export default class UserProfile extends Component {
                             <a href="/editprofile">
                                 <button className="btn profile-edit-btn" onClick={async (e) => {
                                     e.preventDefault();
-                                    axios.put(`http://localhost:5000/user/updatefollow/${this.state.user._id}`, {
+                                    axios.put(`user/updatefollow/${this.state.user._id}`, {
                                         followedBy: this.props.user._id,
                                         follows: this.state.user?.followers?.includes(this.props.user._id)
                                     }, {
