@@ -10,7 +10,6 @@ const getBaseUrl = () => {
         default:
             url = 'http://localhost:5000/';
     }
-    console.log('api', url);
     return url;
 }
 
