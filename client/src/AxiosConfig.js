@@ -6,7 +6,7 @@ const getBaseUrl = () => {
         case 'production':
             url = 'https://celestial-tvt7.onrender.com/';
             break;
-        case 'http://localhost:5000/http://localhost:5000/':
+        case 'development':
         default:
             url = 'http://localhost:5000/';
     }
