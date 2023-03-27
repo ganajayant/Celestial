@@ -11,12 +11,12 @@ export default class Posts extends Component {
         }
     }
     componentDidMount() {
-        axios.get("post/").then((res) => {
-            this.setState({ posts: res.data })
-        }, {
+        axios.get("post/", {
             headers: {
                 "auth-token": localStorage.getItem('token')
             }
+        }).then((res) => {
+            this.setState({ posts: res.data })
         })
     }
     render() {
