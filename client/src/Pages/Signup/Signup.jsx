@@ -10,8 +10,8 @@ export default class Signup extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            email: '', fullname: '', username: '', password: '', formErrors: { username: '', password: '', otp: '' },
-            passwordValid: false, usernameValid: false, otpValid: false,
+            email: '', fullname: '', username: '', password: '', formErrors: { username: '', password: '' },
+            passwordValid: false, usernameValid: false,
             otp: ''
         };
     }
@@ -40,27 +40,19 @@ export default class Signup extends Component {
                 this.setState({ formErrors: { password: "Password must contain at least 8 characters, one uppercase, one lowercase, one number and one special case character" } });
             }
         }
-        else if (event.target.name === "otp") {
-            const otpregex = /^[0-9]{6}$/;
-            if (otpregex.test(event.target.value)) {
-                this.setState({ otpValid: true });
-                this.setState({ formErrors: { otp: '' } });
-            }
-            else {
-                this.setState({ otpValid: false });
-                this.setState({ formErrors: { otp: "OTP must be 6 digits" } });
-            }
-        }
+
         else {
-            this.setState({ formErrors: { username: '', password: '', otp: '' } });
+            this.setState({ formErrors: { username: '', password: '' } });
         }
     }
 
     handleSubmit = async (event) => {
         event.preventDefault();
         if (this.state.usernameValid && this.state.passwordValid) {
+            console.log('hello');
             try {
                 const response = await axios.post('user/auth/signup', JSON.stringify({ email: this.state.email, fullname: this.state.fullname, username: this.state.username, password: this.state.password, otp: this.state.otp }));
+                console.log('hello');
                 if (response.status === 200) {
                     Swal.fire({
                         title: 'Success!',
