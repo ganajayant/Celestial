@@ -85,7 +85,6 @@ export default class Signup extends Component {
                                 <img src={logo} alt="" style={{ width: "12.5em", marginLeft: "3.125em" }} />
                                 {this.state.formErrors.username && <span style={{ color: "red", fontSize: "13px" }} >{this.state.formErrors.username}</span>}
                                 {this.state.formErrors.password && <span style={{ color: "red", fontSize: "13px" }} >{this.state.formErrors.password}</span>}
-                                {this.state.formErrors.otp && <span style={{ color: "red", fontSize: "13px" }} >{this.state.formErrors.otp}</span>}
                                 <div className="form-floating mb-3">
                                     <input className="form-control" name="email" placeholder="Email Address" value={this.state.value} onChange={this.handleChange} required={true} type="email" /><label>Email</label>
                                     <button className="btn btn-dark fw-bold w-100 bg-gradient" onChange={this.handleChange
@@ -118,7 +117,6 @@ export default class Signup extends Component {
                                     } type="submit" href="/#">Send OTP</button>
                                 </div>
                                 <div className="form-floating mb-3">
-                                    {/* otp field with button */}
                                     <input className="form-control" name="otp" placeholder="OTP" value={this.state.value} onChange={this.handleChange} required={true} type="text" /><label>OTP</label>
                                 </div>
                                 <div className="form-floating mb-3">
