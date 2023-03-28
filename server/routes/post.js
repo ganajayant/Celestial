@@ -7,9 +7,10 @@ const router = Router()
 
 /**
  * @swagger
- * /:
+ * /post:
  *   post:
  *     summary: Upload a post with an image and caption
+ *     tags: [Posts]
  *     consumes:
  *       - multipart/form-data
  *     parameters:
@@ -44,10 +45,47 @@ const router = Router()
 router.post('/', JWTVERIFY, PostUpload)
 
 /**
- * @swagger
- * /api/posts/{id}:
+ * @swagger         
+ * components:
+ *   schemas:
+ *     Post:
+ *       type: object
+ *       properties:
+ *         Userid:
+ *           type: string
+ *           description: The ID of the user who created the post.
+ *         ImageURL:
+ *           type: string
+ *           description: The URL of the image associated with the post.
+ *         Caption:
+ *           type: string
+ *           description: The caption of the post.
+ *         Likes:
+ *           type: array
+ *           description: The array of user IDs who liked the post.
+ *           items:
+ *             type: string
+ *         Comments:
+ *           type: array
+ *           description: The array of comments associated with the post.
+ *           items:
+ *             type: object
+ *             properties:
+ *               Userid:
+ *                 type: string
+ *                 description: The ID of the user who created the comment.
+ *               Comment:
+ *                 type: string
+ *                 description: The content of the comment.
+ *       required:
+ *         - Userid
+ *         - ImageURL
+ *         - Caption
+ * 
+ * /post/{id}:
  *   post:
  *     summary: Retrieve a single post by post ID.
+ *     tags: [Posts]
  *     parameters:
  *       - in: path
  *         name: id
@@ -82,9 +120,46 @@ router.post('/:id', JWTVERIFY, PostIdByPostId)
 
 /**
  * @swagger
- * /api/posts:
+ * components:
+ *   schemas:
+ *     Post:
+ *       type: object
+ *       properties:
+ *         Userid:
+ *           type: string
+ *           description: The ID of the user who created the post.
+ *         ImageURL:
+ *           type: string
+ *           description: The URL of the image associated with the post.
+ *         Caption:
+ *           type: string
+ *           description: The caption of the post.
+ *         Likes:
+ *           type: array
+ *           description: The array of user IDs who liked the post.
+ *           items:
+ *             type: string
+ *         Comments:
+ *           type: array
+ *           description: The array of comments associated with the post.
+ *           items:
+ *             type: object
+ *             properties:
+ *               Userid:
+ *                 type: string
+ *                 description: The ID of the user who created the comment.
+ *               Comment:
+ *                 type: string
+ *                 description: The content of the comment.
+ *       required:
+ *         - Userid
+ *         - ImageURL
+ *         - Caption 
+ * 
+ * /post:
  *   get:
  *     summary: Retrieve all posts
+ *     tags: [Posts]
  *     description: Retrieve a list of all posts from the database
  *     parameters:
  *       - in: header
@@ -111,9 +186,46 @@ router.get('/', JWTVERIFY, PostData)
 
 /**
  * @swagger
- * /api/posts/{id}:
+ * components:
+ *   schemas:
+ *     Post:
+ *       type: object
+ *       properties:
+ *         Userid:
+ *           type: string
+ *           description: The ID of the user who created the post.
+ *         ImageURL:
+ *           type: string
+ *           description: The URL of the image associated with the post.
+ *         Caption:
+ *           type: string
+ *           description: The caption of the post.
+ *         Likes:
+ *           type: array
+ *           description: The array of user IDs who liked the post.
+ *           items:
+ *             type: string
+ *         Comments:
+ *           type: array
+ *           description: The array of comments associated with the post.
+ *           items:
+ *             type: object
+ *             properties:
+ *               Userid:
+ *                 type: string
+ *                 description: The ID of the user who created the comment.
+ *               Comment:
+ *                 type: string
+ *                 description: The content of the comment.
+ *       required:
+ *         - Userid
+ *         - ImageURL
+ *         - Caption
+ * 
+ * /post/{id}:
  *   get:
  *     summary: Retrieve all posts by user ID.
+ *     tags: [Posts]
  *     parameters:
  *       - in: path
  *         name: id
@@ -150,11 +262,47 @@ router.get('/:id', JWTVERIFY, PostId)
 
 /**
  * @swagger
+ * components:
+ *   schemas:
+ *     Post:
+ *       type: object
+ *       properties:
+ *         Userid:
+ *           type: string
+ *           description: The ID of the user who created the post.
+ *         ImageURL:
+ *           type: string
+ *           description: The URL of the image associated with the post.
+ *         Caption:
+ *           type: string
+ *           description: The caption of the post.
+ *         Likes:
+ *           type: array
+ *           description: The array of user IDs who liked the post.
+ *           items:
+ *             type: string
+ *         Comments:
+ *           type: array
+ *           description: The array of comments associated with the post.
+ *           items:
+ *             type: object
+ *             properties:
+ *               Userid:
+ *                 type: string
+ *                 description: The ID of the user who created the comment.
+ *               Comment:
+ *                 type: string
+ *                 description: The content of the comment.
+ *       required:
+ *         - Userid
+ *         - ImageURL
+ *         - Caption
+ * 
  * tags:
  *   name: Posts
  *   description: API for managing posts
  *
- * /posts/list:
+ * /post/list:
  *   post:
  *     summary: Get a list of posts by user ID
  *     tags: [Posts]
@@ -191,9 +339,10 @@ router.post('/posts/list', JWTVERIFY, PostsByList)
 
 /**
  * @swagger
- * /like/{id}:
+ * /post/like/{id}:
  *   put:
  *     summary: Update the likes of a post.
+ *     tags: [Posts]
  *     parameters:
  *       - in: path
  *         name: id
@@ -257,10 +406,46 @@ router.put('/like/:id', JWTVERIFY, PostLike)
 
 /**
  * @swagger
- * /comment/{id}:
+ * components:
+ *   schemas:
+ *     Post:
+ *       type: object
+ *       properties:
+ *         Userid:
+ *           type: string
+ *           description: The ID of the user who created the post.
+ *         ImageURL:
+ *           type: string
+ *           description: The URL of the image associated with the post.
+ *         Caption:
+ *           type: string
+ *           description: The caption of the post.
+ *         Likes:
+ *           type: array
+ *           description: The array of user IDs who liked the post.
+ *           items:
+ *             type: string
+ *         Comments:
+ *           type: array
+ *           description: The array of comments associated with the post.
+ *           items:
+ *             type: object
+ *             properties:
+ *               Userid:
+ *                 type: string
+ *                 description: The ID of the user who created the comment.
+ *               Comment:
+ *                 type: string
+ *                 description: The content of the comment.
+ *       required:
+ *         - Userid
+ *         - ImageURL
+ *         - Caption
+ * 
+ * /post/comment/{id}:
  *   put:
  *     summary: Add a comment to a post
- *     tags: [Comments]
+ *     tags: [Posts]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -310,7 +495,7 @@ router.put('/comment/:id', JWTVERIFY, PostComment)
 
 /**
  * @swagger
- * /api/posts/{id}:
+ * /post/{id}:
  *   delete:
  *     summary: Deletes a post.
  *     description: Deletes a post by the given ID.
@@ -341,7 +526,6 @@ router.put('/comment/:id', JWTVERIFY, PostComment)
  *       '500':
  *         description: Internal server error.
  */
-
 router.delete('/:id', JWTVERIFY, DeletePost)
 
 export default router;

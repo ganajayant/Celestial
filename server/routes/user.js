@@ -12,6 +12,7 @@ const router = Router()
  * /user:
  *   get:
  *     summary: Get user information
+ *     tags: [Users]
  *     description: Retrieve user information based on authentication token
  *     responses:
  *       200:
@@ -113,7 +114,7 @@ router.get('/', GetUser)
  *           type: integer
  *           description: The number of users this user is following
  *
- * /users/{id}:
+ * /user/{id}:
  *   get:
  *     summary: Get user by ID
  *     description: Retrieve a user by their unique ID
@@ -185,9 +186,10 @@ router.get('/:id', JWTVERIFY, GetUserUsingID)
  *           type: integer
  *           description: The number of users this user is following
  * 
- * /api/usersearch/{search}:
+ * /usersearch/{search}:
  *   get:
  *     summary: Search for a user by username
+ *     tags: [Users]
  *     parameters:
  *       - in: path
  *         name: search
@@ -256,7 +258,7 @@ router.get('/usersearch/:search', JWTVERIFY, GetUserUsingSearch)
  *           type: integer
  *           description: The number of users this user is following
  * 
- * /users/all:
+ * /user/all:
  *   get:
  *     summary: Get all users
  *     tags: [Users]
@@ -319,7 +321,7 @@ router.get('/users/all', JWTVERIFY, GetUsers)
  *           type: integer
  *           description: The number of users this user is following
  * 
- * /users/{id}:
+ * /user/{id}:
  *   delete:
  *     summary: Delete a user
  *     tags: [Users]
@@ -357,7 +359,7 @@ router.delete('/:id', JWTVERIFY, DeleteUser)
 
 /**
  * @swagger
- * /:
+ * /user:
  *   put:
  *     summary: Update user profile.
  *     tags: [Users]
@@ -404,8 +406,9 @@ router.put('/', JWTVERIFY, UpdateUser)
 
 /**
  * @swagger
- * /users/{id}:
+ * /user/{id}:
  *   put:
+ *     summary: Update user password.
  *     tags:
  *       - Users
  *     description: Update user password
@@ -449,7 +452,7 @@ router.put('/:id', JWTVERIFY, UpdatePassword)
 
 /**
  * @swagger
- * /users/updatefollow/{id}:
+ * /user/updatefollow/{id}:
  *   put:
  *     summary: Update user's followers/following list.
  *     tags: [Users]
@@ -490,10 +493,10 @@ router.put('/updatefollow/:id', JWTVERIFY, UpdateFollow)
 
 /**
  * @swagger
- * /bookmark/{id}:
+ * /user/bookmark/{id}:
  *   put:
  *     summary: Update bookmark status of a post for a user
- *     tags: [Bookmarks]
+ *     tags: [Users]
  *     description: Update bookmark status of a post for a user
  *     parameters:
  *       - in: path
@@ -563,10 +566,10 @@ router.put('/bookmark/:id', JWTVERIFY, UpdateBookmark)
  *         following:
  *           type: integer
  *           description: The number of users this user is following
- * /auth/signup:
+ * /user/auth/signup:
  *   post:
  *     summary: Signup a new user
- *     tags: [Auth]
+ *     tags: [Authentication]
  *     requestBody:
  *       required: true
  *       content:
@@ -656,9 +659,10 @@ router.post('/auth/signup', Signup)
 
 /**
  * @swagger
- * /auth/login:
+ * /user/auth/login:
  *   post:
  *     summary: Login to the application
+ *     tags: [Authentication]
  *     requestBody:
  *       required: true
  *       content:
@@ -699,7 +703,7 @@ router.post('/auth/login/', Login)
 /**
  * @swagger
  *
- * /auth/logout:
+ * /user/auth/logout:
  *   get:
  *     summary: Logs out the current user by clearing the token cookie
  *     tags:
@@ -716,7 +720,7 @@ router.get('/auth/logout', Logout)
 
 /**
  * @swagger
- * /auth/otp:
+ * /user/auth/otp:
  *   post:
  *     summary: Send an OTP to the user's email address
  *     tags:
