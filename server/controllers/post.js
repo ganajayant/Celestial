@@ -3,6 +3,8 @@ import { cloudinaryconfig } from "../utils/cloudinary.js";
 import POST from "../models/Post.js";
 import USER from "../models/User.js";
 
+import client from "../utils/redis.js";
+
 export const PostUpload = async (req, res, next) => {
 	res.sendStatus(200);
 	console.log(req.file);
@@ -28,6 +30,7 @@ export const PostUpload = async (req, res, next) => {
 					error,
 				});
 			} else {
+				client.del(req.body.userid);
 				console.log("Success");
 			}
 		});
@@ -41,7 +44,16 @@ export const PostData = async (req, res, next) => {
 };
 
 export const PostId = async (req, res, next) => {
-	POST.find({ Userid: req.params.id }).then((items) => res.json(items));
+	const cachedData = await client.get(req.params.id);
+	if (cachedData) {
+		res.send(JSON.parse(cachedData));
+	}
+	else {
+		POST.find({ Userid: req.params.id }).then((items) => {
+			client.set(req.params.id, JSON.stringify(items));
+			res.json(items);
+		});
+	}
 };
 
 export const PostIdByPostId = async (req, res, next) => {
