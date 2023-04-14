@@ -25,7 +25,7 @@ const app = express();
 
 mongoose.set("strictQuery", false);
 mongoose.connect(URL, { useNewUrlParser: true, useUnifiedTopology: true }).then(() => app.listen(PORT, () => {
-    console.log(`Server is running on : ${PORT}`);
+    console.log(`Server is running on port : ${PORT}`);
 })).catch((error) => console.log(error.message));
 
 app.use(bodyParser.json());
