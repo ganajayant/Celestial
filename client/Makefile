@@ -1,2 +1,2 @@
-build-dev:
+build:
 	docker build -t react-app .
