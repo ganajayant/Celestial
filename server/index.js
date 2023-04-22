@@ -37,4 +37,8 @@ app.use('/post', upload.single('file'), PostRoutes)
 app.use('/news', NewsRoutes)
 app.use('/user', upload.single('file'), UserRoutes)
 
+app.get('/', (req, res) => {
+    res.json({ message: 'Hello from celestial server' });
+});
+
 app.use('/documentation', swaggerUi.serve, swaggerUi.setup(swaggerJsdoc(options)));
