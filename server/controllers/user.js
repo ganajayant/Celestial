@@ -18,13 +18,14 @@ export const Signup = (req, res, next) => {
             const currentTime = new Date().getTime();
             const diff = currentTime - otpTime;
             if (diff > 300000) {
+                console.log('OTP Expired');
                 res.status(404).json({
                     message: 'OTP Expired'
                 })
             }
             else {
                 if (otp === givenotp) {
-                    bcrypt.hash(obj.password, process.env.BCRYPT_SALT, (err, hashedPass) => {
+                    bcrypt.hash(obj.password, 10, (err, hashedPass) => {
                         if (err) {
                             res.json({
                                 error: err
@@ -44,6 +45,7 @@ export const Signup = (req, res, next) => {
                             user.role = 'user';
                             user.save((error, user) => {
                                 if (error) {
+                                    console.log(error.message);
                                     res.status(401).send({ message: error.message });
                                 }
                                 else {
@@ -59,6 +61,7 @@ export const Signup = (req, res, next) => {
             }
         }
         else {
+            console.log('no user found');
             res.status(404).json({
                 message: 'No user found!'
             })
@@ -143,6 +146,7 @@ export const GetUserUsingSearch = async (req, res, next) => {
     try {
         let regex = new RegExp(term, 'i');
         let search = await USER.find({ username: regex }).exec();
+        console.log(search);
         res.send({ payload: search });
     } catch (error) {
         res.json({ error: 'Invalid User' })
@@ -160,7 +164,9 @@ export const SendOTP = async (req, res, next) => {
     };
     transporter.sendMail(message, (error, info) => {
         if (error) {
-            res.json({ msg: "Error sending mail" });
+            console.log(error);
+        } else {
+            console.log(`Email sent: ${info.response}`);
         }
     });
     const newOTP = new OTP({
@@ -191,6 +197,8 @@ export const SendOTP = async (req, res, next) => {
 }
 export const UpdateUser = async (req, res, next) => {
     res.sendStatus(200);
+    console.log(req.file);
+    console.log(req.body);
     if (!req.file) {
         USER.findByIdAndUpdate(req.body.userid, {
             bio: req.body.bio,
@@ -201,6 +209,9 @@ export const UpdateUser = async (req, res, next) => {
                 console.log(error.message);
                 res.json({ error })
             }
+            else {
+                console.log(documentuser);
+            }
         })
     }
     if (req.file) {
@@ -209,6 +220,7 @@ export const UpdateUser = async (req, res, next) => {
         }).catch(error => {
             console.log(error.message)
         });
+        console.log(uploadresponse);
         USER.findByIdAndUpdate(req.body.userid, {
             ImageURL: uploadresponse.secure_url, bio: req.body.bio,
             name: req.body.name,
@@ -217,6 +229,9 @@ export const UpdateUser = async (req, res, next) => {
             if (error) {
                 console.log(error.message);
                 res.json({ error })
+            }
+            else {
+                console.log(documentuser);
             }
         })
     }
@@ -234,6 +249,9 @@ export const UpdateFollow = (req, res, next) => {
                 console.log(error.message);
                 res.json({ error })
             }
+            else {
+                console.log('Unfollowed');
+            }
         })
         USER.findByIdAndUpdate(req.body.followedBy, {
             $pull: { following: req.params.id }
@@ -241,6 +259,9 @@ export const UpdateFollow = (req, res, next) => {
             if (error) {
                 console.log(error.message);
                 res.json({ error })
+            }
+            else {
+                console.log('Unfollowed');
             }
         })
     }
@@ -252,6 +273,9 @@ export const UpdateFollow = (req, res, next) => {
                 console.log(error.message);
                 res.json({ error })
             }
+            else {
+                console.log('Followed');
+            }
         })
         USER.findByIdAndUpdate(req.body.followedBy, {
             $push: { following: req.params.id }
@@ -260,11 +284,15 @@ export const UpdateFollow = (req, res, next) => {
                 console.log(error.message);
                 res.json({ error })
             }
+            else {
+                console.log('Followed');
+            }
         })
 
     }
 }
 export const UpdatePassword = (req, res, next) => {
+    console.log('password', req.params.id);
     USER.findById(req.params.id).then(user => {
         if (user) {
             bcrypt.compare(req.body.oldpassword, user.password, (error, result) => {
@@ -274,7 +302,7 @@ export const UpdatePassword = (req, res, next) => {
                     })
                 }
                 if (result) {
-                    bcrypt.hash(req.body.newpassword, process.env.BCRYPT_SALT, (err, hashedPass) => {
+                    bcrypt.hash(req.body.newpassword, 10, (err, hashedPass) => {
                         if (err) {
                             res.json({
                                 error: err
@@ -290,6 +318,7 @@ export const UpdatePassword = (req, res, next) => {
                                     res.json({ error })
                                 }
                                 else {
+                                    console.log(documentuser);
                                     res.json({ message: 'Password Updated Successfully' })
                                 }
                             })
@@ -322,7 +351,11 @@ export const UpdateBookmark = (req, res, next) => {
                     $pull: { bookmarks: req.params.id }
                 }, (error) => {
                     if (error) {
+                        console.log(error.message);
                         res.json({ error })
+                    }
+                    else {
+                        console.log('Removed Bookmark');
                     }
                 })
             }
@@ -333,6 +366,9 @@ export const UpdateBookmark = (req, res, next) => {
                     if (error) {
                         console.log(error.message);
                         res.json({ error })
+                    }
+                    else {
+                        console.log('Added Bookmark');
                     }
                 }
                 )
@@ -361,6 +397,9 @@ export const DeleteUser = async (req, res, next) => {
                     console.log(error.message);
                     res.json({ error })
                 }
+                else {
+                    console.log('Unfollowed');
+                }
             })
         })
         user.following.forEach(following => {
@@ -370,6 +409,9 @@ export const DeleteUser = async (req, res, next) => {
                 if (error) {
                     console.log(error.message);
                     res.json({ error })
+                }
+                else {
+                    console.log('Unfollowed');
                 }
             })
         })
@@ -387,6 +429,9 @@ export const DeleteUser = async (req, res, next) => {
                                         console.log(error.message);
                                         res.json({ error })
                                     }
+                                    else {
+                                        console.log('Removed Bookmark');
+                                    }
                                 })
                         }
                     })
@@ -402,6 +447,9 @@ export const DeleteUser = async (req, res, next) => {
                         console.log(error.message);
                         res.json({ error })
                     }
+                    else {
+                        console.log('Removed Like');
+                    }
                 })
             }
         })
@@ -410,6 +458,9 @@ export const DeleteUser = async (req, res, next) => {
             if (error) {
                 console.log(error.message);
                 res.json({ error })
+            }
+            else {
+                console.log('Posts Deleted');
             }
         })
         POST.find().then(posts => {
@@ -420,7 +471,11 @@ export const DeleteUser = async (req, res, next) => {
                             $pull: { Comments: { user: req.params.id } }
                         }, (error) => {
                             if (error) {
+                                console.log(error.message);
                                 res.json({ error })
+                            }
+                            else {
+                                console.log('Comment Deleted');
                             }
                         })
                     }
