@@ -7,8 +7,6 @@ import client from "../utils/redis.js";
 
 export const PostUpload = async (req, res, next) => {
 	res.sendStatus(200);
-	console.log(req.file);
-	console.log(req.body);
 	if (req.file) {
 		const uploadresponse = await cloudinaryconfig.v2.uploader
 			.upload(req.file.path, {
@@ -17,7 +15,6 @@ export const PostUpload = async (req, res, next) => {
 			.catch((error) => {
 				console.log(error.message);
 			});
-		console.log(uploadresponse);
 		const post = new POST({
 			ImageURL: uploadresponse.secure_url,
 			Caption: req.body.caption,
@@ -25,13 +22,11 @@ export const PostUpload = async (req, res, next) => {
 		});
 		post.save((error) => {
 			if (error) {
-				console.log(error);
 				res.status(401).json({
 					error,
 				});
 			} else {
 				client.del(req.body.userid);
-				console.log("Success");
 			}
 		});
 	} else {
@@ -81,7 +76,6 @@ export const PostComment = async (req, res, next) => {
 	POST.findByIdAndUpdate(req.params.id, {
 		$push: { Comments: { comment: req.body.comment, user: req.body.commenteduser } },
 	}).then((items) => {
-		console.log(items);
 		res.json(items)
 	});
 }
