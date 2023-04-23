@@ -50,7 +50,13 @@ export default class Signup extends Component {
         event.preventDefault();
         if (this.state.usernameValid && this.state.passwordValid) {
             try {
-                const response = await axios.post('user/auth/signup', JSON.stringify({ email: this.state.email, fullname: this.state.fullname, username: this.state.username, password: this.state.password, otp: this.state.otp }));
+                const response = await axios.post("user/auth/signup", {
+					email: this.state.email,
+					fullname: this.state.fullname,
+					username: this.state.username,
+					password: this.state.password,
+					otp: this.state.otp,
+				});
                 if (response.status === 200) {
                     Swal.fire({
                         title: 'Success!',

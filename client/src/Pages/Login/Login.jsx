@@ -37,20 +37,30 @@ export default class Login extends Component {
         event.preventDefault();
         if (this.state.passwordValid) {
             try {
-                const response = await axios.post('user/auth/login', JSON.stringify({ email: this.state.email, password: this.state.password }))
-                if (response.status === 200) {
-                    localStorage.setItem('token', response.data.user);
-                    Swal.fire('Login Success', 'Welcome to our website', 'success');
-                    if (response.data.role === "admin") {
-                        window.location.href = "/adminportal";
-                    }
-                    else {
-                        window.location.href = '/'
-                    }
-                }
-            } catch (error) {
-                Swal.fire('Login Failed', 'Please check your email and password', 'error');
-            }
+				const response = await axios.post("user/auth/login", {
+					email: this.state.email,
+					password: this.state.password,
+				});
+				if (response.status === 200) {
+					localStorage.setItem("token", response.data.user);
+					Swal.fire(
+						"Login Success",
+						"Welcome to our website",
+						"success"
+					);
+					if (response.data.role === "admin") {
+						window.location.href = "/adminportal";
+					} else {
+						window.location.href = "/";
+					}
+				}
+			} catch (error) {
+				Swal.fire(
+					"Login Failed",
+					"Please check your email and password",
+					"error"
+				);
+			}
         }
     }
 
@@ -92,17 +102,6 @@ export default class Login extends Component {
                     </div>
                 </div>
             </section >
-            {/* <form onSubmit={this.handleSubmit}>
-                <h3>Login</h3>
-                <label for="email">Email</label>
-                <input placeholder="Email" id="email" name="email" value={this.state.value} onChange={this.handleChange} required="" type="email" />
-                <label for="password">Password</label>
-                <input id="password" name="password" placeholder="Password" value={this.state.value} onChange={this.handleChange} required="" type="password" />
-                <button>Log In</button>
-                <p className="m-0" style={{ paddingTop: "2em" }}>
-                    Doesn't Have account? <a href="/signup  ">Sign Up</a>
-                </p>
-            </form > */}
         </div>
     }
 }
