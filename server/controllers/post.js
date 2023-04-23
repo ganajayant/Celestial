@@ -5,34 +5,70 @@ import USER from "../models/User.js";
 
 import client from "../utils/redis.js";
 
+// export const PostUpload = async (req, res, next) => {
+// 	res.sendStatus(200);
+// 	if (req.file) {
+// 		const uploadresponse = await cloudinaryconfig.v2.uploader
+// 			.upload(req.file.path, {
+// 				upload_preset: "Post2022",
+// 			})
+// 			.catch((error) => {
+// 				console.log(error.message);
+// 			});
+// 		const post = new POST({
+// 			ImageURL: uploadresponse.secure_url,
+// 			Caption: req.body.caption,
+// 			Userid: req.body.userid,
+// 		});
+// 		post.save((error) => {
+// 			if (error) {
+// 				res.status(401).json({
+// 					error,
+// 				});
+// 			} else {
+// 				client.del(req.body.userid);
+// 			}
+// 		});
+// 	} else {
+// 		console.log("error");
+// 	}
+// };
 export const PostUpload = async (req, res, next) => {
-	res.sendStatus(200);
-	if (req.file) {
-		const uploadresponse = await cloudinaryconfig.v2.uploader
-			.upload(req.file.path, {
-				upload_preset: "Post2022",
-			})
-			.catch((error) => {
-				console.log(error.message);
-			});
-		const post = new POST({
-			ImageURL: uploadresponse.secure_url,
-			Caption: req.body.caption,
-			Userid: req.body.userid,
-		});
-		post.save((error) => {
-			if (error) {
-				res.status(401).json({
-					error,
+	try {
+		if (req.file) {
+			const uploadresponse = await cloudinaryconfig.v2.uploader
+				.upload(req.file.path, {
+					upload_preset: "Post2022",
+				})
+				.catch((error) => {
+					console.log(error.message);
 				});
-			} else {
-				client.del(req.body.userid);
+			if (!uploadresponse || !uploadresponse.secure_url) {
+				throw new Error("Failed to upload file to Cloudinary");
 			}
-		});
-	} else {
-		console.log("error");
+			const post = new POST({
+				ImageURL: uploadresponse.secure_url,
+				Caption: req.body.caption,
+				Userid: req.body.userid,
+			});
+			post.save((error) => {
+				if (error) {
+					res.status(401).json({
+						error,
+					});
+				} else {
+					client.del(req.body.userid);
+					res.sendStatus(200);
+				}
+			});
+		} else {
+			console.log("error");
+		}
+	} catch (error) {
+		console.log(error.message);
 	}
 };
+
 
 export const PostData = async (req, res, next) => {
 	POST.find({}).then((items) => res.json(items));
