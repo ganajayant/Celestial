@@ -55,6 +55,6 @@ Celestial is an open-source project, and we welcome contributions from the commu
 
 ## License
 
-The Celestial project is released under the MIT License. See the [LICENSE.md](https://github.com/ganajayant/Celestial/LICENSE.md) file for more details.
+The Celestial project is released under the MIT License. See the [LICENSE.md](https://github.com/ganajayant/Celestial/LICENSE) file for more details.
 
 
