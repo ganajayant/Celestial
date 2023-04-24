@@ -13,8 +13,8 @@ const expect = chai.expect;
 // 		// Create a mock request object
 // 		const req = {
 // 			body: {
-// 				email: "ganajayant28@gmail.com",
-// 				password: "Celestial@123",
+// 				email: "",
+// 				password: "",
 // 			},
 // 		};
 
@@ -47,8 +47,8 @@ describe("Login", () => {
 		// Create a mock request object
 		const req = {
 			body: {
-				email: "ganajayant28@gmail.com",
-				password: "Celestial@123",
+				email: "",
+				password: "",
 			},
 		};
 
@@ -78,8 +78,8 @@ describe("Login", () => {
 		// Create a mock request object with invalid credentials
 		const req = {
 			body: {
-				email: "ganajayant28@gmail.com",
-				password: "Celestial@121",
+				email: "",
+				password: "",
 			},
 		};
 
