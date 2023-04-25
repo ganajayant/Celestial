@@ -6,19 +6,8 @@ Celestial is a social media platform designed for stargazing enthusiasts to shar
 
 - Backend URLs: 
   - https://backend-vtpg.onrender.com
-  - https://celestialbackend.azurewebsites.net/
 - Frontend URL: 
   - https://celestialfrontend.onrender.com
-
-## Team
-
-The Celestial project is developed and maintained by the following team members:
- 
-- Gana Jayant Sigadam, S20200010199
-- Sampreeth Jangala, S20200010079
-- Sri Simha Ram Naidu Guntreddi, S20200010072
-- Atul Raj, S20200010026
-- Nikhitha Mudavath, S20200010136
 
 ## Getting Started
 
