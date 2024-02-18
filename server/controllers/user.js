@@ -72,6 +72,7 @@ import { transporter } from "../utils/nodemailer.js";
 //     })
 // }
 export const Signup = async (req, res, next) => {
+	console.log("calling signup req",req.body);
 	try {
 		const obj = JSON.parse(JSON.stringify(req.body)); // Convert req.body to a JSON string and then parse it
 		const email = obj.email;
